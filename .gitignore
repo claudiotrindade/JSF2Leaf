@@ -6,3 +6,4 @@
 /source/target/*.jar
 /source/target/maven-archiver/*.properties
 /source/target/maven-status/maven-compiler-plugin/compile/default-compile/*.lst
+/.idea
