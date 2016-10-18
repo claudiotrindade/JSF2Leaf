@@ -88,9 +88,8 @@ GNU General Public License for more details.
             <ui:repeat value="#{layer.markers}" var="marker">
                 <ui:param name="path" value="/images/markers/#{marker.fileName}" />
 
-                //the Stopcache parameter is just a temporary fix to a caching problem - if we update the image, without that the change is not visible on server
                 if(!#{marker.pulse.pulsing}) {
-                    var icon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource[path]}?stopCache=true', shadowUrl: '#{resource['images:marker-shadow.png']}'});
+                    var icon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource[path]}', shadowUrl: '#{resource['images:marker-shadow.png']}'});
                 } else {
                     var icon = L.icon.pulse({iconSize:[#{marker.pulse.size},#{marker.pulse.size}],color:'#{marker.pulse.color}'});
                 }
