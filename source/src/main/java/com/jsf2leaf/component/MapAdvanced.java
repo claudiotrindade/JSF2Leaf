@@ -14,10 +14,11 @@ GNU General Public License for more details.*/
 
 package com.jsf2leaf.component;
 
+import com.jsf2leaf.model.Map;
+
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
 
-import com.jsf2leaf.model.Map;
 
 @FacesComponent("mapAdvanced") 
 public class MapAdvanced extends UINamingContainer {

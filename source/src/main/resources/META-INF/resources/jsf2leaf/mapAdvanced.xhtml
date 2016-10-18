@@ -52,7 +52,7 @@ GNU General Public License for more details.
 
 	<script type="text/javascript">
 		var map_#{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
-		
+		console.log("logging from new file");
 		L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(map_#{cc.attrs.id});
 
 		if(#{cc.mapObject.layerControl})
@@ -135,6 +135,7 @@ GNU General Public License for more details.
 
 		layers.addTo(map_#{cc.attrs.id});
 	</script>
+	<h2>AAAAAAAAAAAAAAAAAAAAAAA</h2>
 	
 </composite:implementation>
 

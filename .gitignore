@@ -1,0 +1,8 @@
+/source/.idea
+/source/*.iml
+/source/target/classes/META-INF
+/source/target/classes/com/jsf2leaf/bean/*.class
+*.class
+/source/target/*.jar
+/source/target/maven-archiver/*.properties
+/source/target/maven-status/maven-compiler-plugin/compile/default-compile/*.lst

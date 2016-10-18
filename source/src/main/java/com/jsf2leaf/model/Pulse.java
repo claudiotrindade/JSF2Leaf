@@ -25,14 +25,12 @@ public class Pulse {
 		this.pulsing = pulsing;
 	}
 
-	public Pulse(boolean pulsing, int size)
-	{
+	public Pulse(boolean pulsing, int size) {
                 this.pulsing = pulsing;
                 this.size = size;
 	}
 
-	public Pulse(boolean pulsing, int size, String color)
-	{
+	public Pulse(boolean pulsing, int size, String color) {
                 this.pulsing = pulsing;
                 this.size = size;
                 this.color = color;

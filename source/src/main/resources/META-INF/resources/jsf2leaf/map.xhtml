@@ -55,7 +55,7 @@ GNU General Public License for more details.
 	
 	<script>
 		var #{cc.attrs.id}_map = L.map('#{cc.attrs.id}', {center: [#{cc.attrs.center}], zoom: #{cc.attrs.zoom}, layers: L.tileLayer('#{cc.attrs.urlTemplate}', {id: 'osm', attribution: '#{cc.attrs.attribution}', maxZoom: #{cc.attrs.maxZoom}, minZoom: #{cc.attrs.minZoom}}), dragging:#{cc.attrs.dragging}, zoomControl:#{cc.attrs.zoomControl} });
-		
+
 		if('#{cc.attrs.marker}')
 		{
 			var #{cc.attrs.id}_marker = L.marker([#{cc.attrs.marker}],{icon: new L.Icon({iconSize: [25, 41], iconAnchor: [25, 41], popupAnchor: [-12, -45], iconUrl: '#{resource['images:marker-icon.png']}', shadowUrl: '#{resource['images:marker-shadow.png']}'})}).addTo(#{cc.attrs.id}_map);
@@ -85,7 +85,6 @@ GNU General Public License for more details.
                 }
                     
 	</script>
-
 </composite:implementation>
 
 </html>

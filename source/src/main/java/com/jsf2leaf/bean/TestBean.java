@@ -14,9 +14,6 @@ GNU General Public License for more details.*/
 
 package com.jsf2leaf.bean;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
-
 import com.jsf2leaf.model.Circle;
 import com.jsf2leaf.model.LatLong;
 import com.jsf2leaf.model.Layer;
@@ -24,6 +21,11 @@ import com.jsf2leaf.model.Map;
 import com.jsf2leaf.model.Marker;
 import com.jsf2leaf.model.Polyline;
 import com.jsf2leaf.model.Pulse;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+
+
 import java.io.Serializable;
 
 @ManagedBean(name = "testBean")
