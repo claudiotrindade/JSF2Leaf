@@ -17,126 +17,124 @@ GNU General Public License for more details.
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:composite="http://java.sun.com/jsf/composite">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface componentType="mapAdvanced">
-	<composite:attribute name="map" type="java.lang.Object" />
+    <composite:attribute name="map" type="java.lang.Object" />
 </composite:interface>
 
 <composite:implementation>
 
-	<head>
-		<link rel="stylesheet" href="#{resource['css:leaflet.css']}" />
-		<script src="#{resource['js:leaflet.js']}"></script>
-		
-		<link rel="stylesheet" href="#{resource['css:markercluster.css']}" />
-		<script src="#{resource['js:markercluster.js']}"></script>
+    <head>
+        <link rel="stylesheet" href="#{resource['css:leaflet.css']}" />
+        <script src="#{resource['js:leaflet.js']}"></script>
+        
+        <link rel="stylesheet" href="#{resource['css:markercluster.css']}" />
+        <script src="#{resource['js:markercluster.js']}"></script>
                 
-		<link rel="stylesheet" href="#{resource['css:Control.MiniMap.min.css']}" />
-		<script src="#{resource['js:Control.MiniMap.min.js']}"></script>
+        <link rel="stylesheet" href="#{resource['css:Control.MiniMap.min.css']}" />
+        <script src="#{resource['js:Control.MiniMap.min.js']}"></script>
                 
-		<link rel="stylesheet" href="#{resource['css:L.Icon.Pulse.css']}" />
-		<script src="#{resource['js:L.Icon.Pulse.js']}"></script>
-	</head>
+        <link rel="stylesheet" href="#{resource['css:L.Icon.Pulse.css']}" />
+        <script src="#{resource['js:L.Icon.Pulse.js']}"></script>
+    </head>
 
-	<style type="text/css">
-		.leaflet-control-layers-toggle {
-			background-image: url('#{resource['images:layers.png']}') !important;
-			}
-	</style>
+    <style type="text/css">
+        .leaflet-control-layers-toggle {
+            background-image: url('#{resource['images:layers.png']}') !important;
+            }
+    </style>
 
-	<div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
+    <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
 
-	<script type="text/javascript">
-		var map_#{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
-		console.log("logging from new file");
-		L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(map_#{cc.attrs.id});
+    <script type="text/javascript">
+        var map_#{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
+        
+        L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(map_#{cc.attrs.id});
 
-		if(#{cc.mapObject.layerControl})
-			var layers = L.control.layers();
-	
-		if(!#{cc.mapObject.zoomEnabled})
-		{
-			map_#{cc.attrs.id}.touchZoom.disable();
-			map_#{cc.attrs.id}.doubleClickZoom.disable();
-			map_#{cc.attrs.id}.scrollWheelZoom.disable();
-			map_#{cc.attrs.id}.boxZoom.disable();
-			map_#{cc.attrs.id}.keyboard.disable();
-		}
+        if(#{cc.mapObject.layerControl})
+            var layers = L.control.layers();
+    
+        if(!#{cc.mapObject.zoomEnabled}) {
+            map_#{cc.attrs.id}.touchZoom.disable();
+            map_#{cc.attrs.id}.doubleClickZoom.disable();
+            map_#{cc.attrs.id}.scrollWheelZoom.disable();
+            map_#{cc.attrs.id}.boxZoom.disable();
+            map_#{cc.attrs.id}.keyboard.disable();
+        }
 
-		if(#{cc.mapObject.miniMap})
-                {
-			new L.Control.MiniMap(L.tileLayer('#{cc.mapObject.urlTemplate}', {}), {
-				toggleDisplay: true,
-				zoomAnimation: true,
-				position: '#{cc.mapObject.miniMapPosition}',
-				width: #{cc.mapObject.miniMapWidth},
-				height: #{cc.mapObject.miniMapHeight}
-			}).addTo(map_#{cc.attrs.id});
-		}
+        if(#{cc.mapObject.miniMap}) {
+            new L.Control.MiniMap(L.tileLayer('#{cc.mapObject.urlTemplate}', {}), {
+                toggleDisplay: true,
+                zoomAnimation: true,
+                position: '#{cc.mapObject.miniMapPosition}',
+                width: #{cc.mapObject.miniMapWidth},
+                height: #{cc.mapObject.miniMapHeight}
+            }).addTo(map_#{cc.attrs.id});
+        }
 
-		//Layers
-		<ui:repeat value="#{cc.mapObject.layers}" var="layer">	
-			
-			var layer = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.LayerGroup();
-		
-			if(#{cc.mapObject.layerControl})
-				layers.addOverlay(layer,"#{layer.label}");
-			
-			//Markers
-			<ui:repeat value="#{layer.markers}" var="marker">
+        //Layers
+        <ui:repeat value="#{cc.mapObject.layers}" var="layer">    
+            
+            var layer = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.LayerGroup();
+        
+            if(#{cc.mapObject.layerControl})
+                layers.addOverlay(layer,"#{layer.label}");
+            
+            //Markers
+            <ui:repeat value="#{layer.markers}" var="marker">
+                <ui:param name="path" value="/images/markers/#{marker.fileName}" />
 
-                                if(!#{marker.pulse.pulsing}) {
-                        		var icon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource['images:marker-icon.png']}', shadowUrl: '#{resource['images:marker-shadow.png']}'});
-                                } else {
-                                        var icon = L.icon.pulse({iconSize:[#{marker.pulse.size},#{marker.pulse.size}],color:'#{marker.pulse.color}'});
-                                }
-                                var marker = L.marker([#{marker.position.latitude}, #{marker.position.longitude}],{icon: icon});
+                if(!#{marker.pulse.pulsing}) {
+                    var icon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource[path]}', shadowUrl: '#{resource['images:marker-shadow.png']}'});
+                } else {
+                    var icon = L.icon.pulse({iconSize:[#{marker.pulse.size},#{marker.pulse.size}],color:'#{marker.pulse.color}'});
+                }
+                var marker = L.marker([#{marker.position.latitude}, #{marker.position.longitude}],{icon: icon});
                                         
-				if('#{marker.popupMsg}')
-					marker.bindPopup('#{marker.popupMsg}');
-				
-				marker.addTo(layer);
-				
-				map_#{cc.attrs.id}.addLayer(layer);
-			</ui:repeat>
-			
-			//Polylines
-			<ui:repeat value="#{layer.polylines}" var="polyline">
-				var poly = L.polyline([],{color: '#{polyline.color}', weight: #{polyline.weight}});
-		
-				<ui:repeat value="#{polyline.points}" var="point">
-					poly.addLatLng(L.latLng(#{point.latitude},#{point.longitude}));
-				</ui:repeat>
-				
-				if('#{polyline.popupMsg}')
-					poly.bindPopup('#{polyline.popupMsg}');
-		
-				poly.addTo(layer);
-			</ui:repeat>
-			
-			//Circles
-			<ui:repeat value="#{layer.circles}" var="circle">
-				var circle = L.circle([#{circle.position.latitude},#{circle.position.longitude}], #{circle.radius},{color: '#{circle.color}',  weight: #{circle.weight}, fillColor: '#{circle.fillColor}', fillOpacity: #{circle.fillOpacity}});
-				
-				if('#{circle.popupMsg}')
-					circle.bindPopup('#{circle.popupMsg}');
-				
-				circle.addTo(layer);
-			</ui:repeat>
-			
-			if(#{layer.checked})
-				map_#{cc.attrs.id}.addLayer(layer);
-						
-		</ui:repeat>
+                if('#{marker.popupMsg}')
+                    marker.bindPopup('#{marker.popupMsg}');
+                
+                marker.addTo(layer);
+                
+                map_#{cc.attrs.id}.addLayer(layer);
+            </ui:repeat>
+            
+            //Polylines
+            <ui:repeat value="#{layer.polylines}" var="polyline">
+                var poly = L.polyline([],{color: '#{polyline.color}', weight: #{polyline.weight}});
+        
+                <ui:repeat value="#{polyline.points}" var="point">
+                    poly.addLatLng(L.latLng(#{point.latitude},#{point.longitude}));
+                </ui:repeat>
+                
+                if('#{polyline.popupMsg}')
+                    poly.bindPopup('#{polyline.popupMsg}');
+        
+                poly.addTo(layer);
+            </ui:repeat>
+            
+            //Circles
+            <ui:repeat value="#{layer.circles}" var="circle">
+                var circle = L.circle([#{circle.position.latitude},#{circle.position.longitude}], #{circle.radius},{color: '#{circle.color}',  weight: #{circle.weight}, fillColor: '#{circle.fillColor}', fillOpacity: #{circle.fillOpacity}});
+                
+                if('#{circle.popupMsg}')
+                    circle.bindPopup('#{circle.popupMsg}');
+                
+                circle.addTo(layer);
+            </ui:repeat>
+            
+            if(#{layer.checked})
+                map_#{cc.attrs.id}.addLayer(layer);
+                        
+        </ui:repeat>
 
-		layers.addTo(map_#{cc.attrs.id});
-	</script>
-	<h2>AAAAAAAAAAAAAAAAAAAAAAA</h2>
-	
+        layers.addTo(map_#{cc.attrs.id});
+    </script>
+    
 </composite:implementation>
 
 </html>
