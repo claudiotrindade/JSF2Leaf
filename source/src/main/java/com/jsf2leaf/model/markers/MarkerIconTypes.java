@@ -49,11 +49,11 @@ public final class MarkerIconTypes {
             pinMarkers = Arrays.asList(BLUE, BLACK, RED, GREEN, ORANGE, YELLOW, DARK_GREEN, DARK_BROWN, BRIGHT_BROWN, BRIGHT_BLUE, PASTEL_GREEN);
         }
 
-        static MarkerIconType getForColor(final Color color, final MarkerIconType defaultValue) {
+        public static MarkerIconType getForColor(final Color color, final MarkerIconType defaultValue) {
             return MarkerIconTypes.getForColor(pinMarkers, color, defaultValue);
         }
 
-        static MarkerIconType getForColor(final Color color) {
+        public static MarkerIconType getForColor(final Color color) {
             return MarkerIconTypes.getForColor(pinMarkers, color, BLUE);
         }
     }
@@ -81,11 +81,11 @@ public final class MarkerIconTypes {
                     HouseMarkers.BRIGHT_BROWN, HouseMarkers.BRIGHT_BLUE, HouseMarkers.PASTEL_GREEN);
         }
 
-        static MarkerIconType getForColor(final Color color, final MarkerIconType defaultValue) {
+        public static MarkerIconType getForColor(final Color color, final MarkerIconType defaultValue) {
             return MarkerIconTypes.getForColor(houseMarkers, color, defaultValue);
         }
 
-        static MarkerIconType getForColor(final Color color) {
+        public static MarkerIconType getForColor(final Color color) {
             return MarkerIconTypes.getForColor(houseMarkers, color, BLUE);
         }
     }
