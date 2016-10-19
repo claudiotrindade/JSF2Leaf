@@ -12,8 +12,8 @@ public enum Color {
     GREEN("#5CCB2B"),
     ORANGE("#E66700"),
     YELLOW("#EEF109"),
-	CYAN("07E4D2"),
-	PURPLE("9200B6"),
+	CYAN("#07E4D2"),
+	PURPLE("#9200B6"),
 	PINK("FF87FB"),
     DARK_BROWN("#754015"),
     BRIGHT_BLUE("#93C2E7");
