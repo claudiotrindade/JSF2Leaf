@@ -19,6 +19,7 @@ public enum Color {
     BRIGHT_BLUE("#93C2E7"),
     
 
+
     private static int nextColorNumber = 0;
 
     private static final Random random = new Random(System.nanoTime());
