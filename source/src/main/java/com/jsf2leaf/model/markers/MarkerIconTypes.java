@@ -39,14 +39,14 @@ public final class MarkerIconTypes {
         public static final MarkerIconType GREEN = new MarkerIconType(Color.GREEN, "pin/green.png");
         public static final MarkerIconType ORANGE = new MarkerIconType(Color.ORANGE, "pin/orange.png");
         public static final MarkerIconType YELLOW = new MarkerIconType(Color.YELLOW, "pin/yellow.png");
-        public static final MarkerIconType DARK_GREEN = new MarkerIconType(Color.DARK_GREEN, "pin/dark_green.png");
+        public static final MarkerIconType CYAN = new MarkerIconType(Color.CYAN, "pin/cyan.png");
+        public static final MarkerIconType PURPLE = new MarkerIconType(Color.PURPLE, "pin/purple.png");
+        public static final MarkerIconType PINK = new MarkerIconType(Color.PINK, "pin/pink.png");
         public static final MarkerIconType DARK_BROWN = new MarkerIconType(Color.DARK_BROWN, "pin/dark_brown.png");
-        public static final MarkerIconType BRIGHT_BROWN = new MarkerIconType(Color.BRIGHT_BROWN, "pin/bright_brown.png");
         public static final MarkerIconType BRIGHT_BLUE = new MarkerIconType(Color.BRIGHT_BLUE, "pin/bright_blue.png");
-        public static final MarkerIconType PASTEL_GREEN = new MarkerIconType(Color.PASTEL_GREEN, "pin/bright_blue.png");
 
         static {
-            pinMarkers = Arrays.asList(BLUE, BLACK, RED, GREEN, ORANGE, YELLOW, DARK_GREEN, DARK_BROWN, BRIGHT_BROWN, BRIGHT_BLUE, PASTEL_GREEN);
+            pinMarkers = Arrays.asList(BLUE, BLACK, RED, GREEN, ORANGE, YELLOW, CYAN, PURPLE, PINK, DARK_BROWN, BRIGHT_BLUE);
         }
 
         public static MarkerIconType getForColor(final Color color, final MarkerIconType defaultValue) {
@@ -69,16 +69,16 @@ public final class MarkerIconTypes {
         public static final MarkerIconType GREEN = new MarkerIconType(Color.GREEN, "house/green.png");
         public static final MarkerIconType ORANGE = new MarkerIconType(Color.ORANGE, "house/orange.png");
         public static final MarkerIconType YELLOW = new MarkerIconType(Color.YELLOW, "house/yellow.png");
-        public static final MarkerIconType DARK_GREEN = new MarkerIconType(Color.DARK_GREEN, "house/dark_green.png");
+        public static final MarkerIconType CYAN = new MarkerIconType(Color.CYAN, "house/cyan.png");
+        public static final MarkerIconType PURPLE = new MarkerIconType(Color.PURPLE, "house/purple.png");
+        public static final MarkerIconType PINK = new MarkerIconType(Color.PINK, "house/pink.png");
         public static final MarkerIconType DARK_BROWN = new MarkerIconType(Color.DARK_BROWN, "house/dark_brown.png");
-        public static final MarkerIconType BRIGHT_BROWN = new MarkerIconType(Color.BRIGHT_BROWN, "house/bright_brown.png");
         public static final MarkerIconType BRIGHT_BLUE = new MarkerIconType(Color.BRIGHT_BLUE, "house/bright_blue.png");
-        public static final MarkerIconType PASTEL_GREEN = new MarkerIconType(Color.PASTEL_GREEN, "house/bright_blue.png");
 
         static {
             houseMarkers = Arrays.asList(HouseMarkers.BLUE, HouseMarkers.BLACK, HouseMarkers.RED, HouseMarkers.GREEN,
-                    HouseMarkers.ORANGE, HouseMarkers.YELLOW, HouseMarkers.DARK_GREEN, HouseMarkers.DARK_BROWN,
-                    HouseMarkers.BRIGHT_BROWN, HouseMarkers.BRIGHT_BLUE, HouseMarkers.PASTEL_GREEN);
+                    HouseMarkers.ORANGE, HouseMarkers.YELLOW, HouseMarkers.CYAN, HouseMarkers.PURPLE,
+                    HouseMarkers.PINK, HouseMarkers.DARK_BROWN, HouseMarkers.BRIGHT_BLUE);
         }
 
         public static MarkerIconType getForColor(final Color color, final MarkerIconType defaultValue) {

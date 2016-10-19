@@ -16,9 +16,7 @@ public enum Color {
 	PURPLE("9200B6"),
 	PINK("FF87FB"),
     DARK_BROWN("#754015"),
-    BRIGHT_BLUE("#93C2E7"),
-    
-
+    BRIGHT_BLUE("#93C2E7");
 
     private static int nextColorNumber = 0;
 
