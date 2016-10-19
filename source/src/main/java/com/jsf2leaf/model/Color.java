@@ -6,23 +6,18 @@ import java.util.Random;
  * Created by Bartek on 2016-06-11.
  */
 public enum Color {
-    BLUE("#0000FF"),
+    BLUE("#2E85CB"),
     BLACK("#000000"),
-    RED("#FF0000"),
-    GREEN("#008000"),
-    ORANGE("#FFA500"),
-    YELLOW("#FFFF00"),
-
-	/*
-		PROPONUJE WYRZUCIC DARK_GREEN BO JEST NIEROZROZNIALNY Z GREEN,
-		ZAMIAST TEGO DORZUCIŁEM CI PURPLE
-	*/
-	DARK_GREEN("#008000"),
-	PURPLE("bc00b5")
-    DARK_BROWN("#663300"),
-    BRIGHT_BROWN("#c86300"),
-    BRIGHT_BLUE("#9999ff"),
-    PASTEL_GREEN("#00ff00");
+    RED("#CB2D29"),
+    GREEN("#5CCB2B"),
+    ORANGE("#E66700"),
+    YELLOW("#EEF109"),
+	CYAN("07E4D2"),
+	PURPLE("9200B6"),
+	PINK("FF87FB"),
+    DARK_BROWN("#754015"),
+    BRIGHT_BLUE("#93C2E7"),
+    
 
     private static int nextColorNumber = 0;
 
