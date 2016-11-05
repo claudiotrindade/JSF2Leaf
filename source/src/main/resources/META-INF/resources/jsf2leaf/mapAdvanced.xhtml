@@ -55,8 +55,9 @@ GNU General Public License for more details.
         
         L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(map_#{cc.attrs.id});
 
-        if(#{cc.mapObject.layerControl})
+        if(#{cc.mapObject.layerControl}) {
             var layers = L.control.layers();
+        }
     
         if(!#{cc.mapObject.zoomEnabled}) {
             map_#{cc.attrs.id}.touchZoom.disable();
@@ -81,8 +82,9 @@ GNU General Public License for more details.
             
             var layer = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.LayerGroup();
         
-            if(#{cc.mapObject.layerControl})
-                layers.addOverlay(layer,"#{layer.label}");
+            if(#{cc.mapObject.layerControl}) {
+                layers.addOverlay(layer, "#{layer.label}");
+            }
             
             //Markers
             <ui:repeat value="#{layer.markers}" var="marker">
@@ -127,12 +129,14 @@ GNU General Public License for more details.
                 circle.addTo(layer);
             </ui:repeat>
             
-            if(#{layer.checked})
+            if(#{layer.visible}) {
                 map_#{cc.attrs.id}.addLayer(layer);
-                        
+            }
         </ui:repeat>
 
-        layers.addTo(map_#{cc.attrs.id});
+        if(#{cc.mapObject.layerControl}) {
+            layers.addTo(map_#{cc.attrs.id});
+        }
     </script>
     
 </composite:implementation>

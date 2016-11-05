@@ -22,8 +22,13 @@ public class Layer {
 	private List<Marker> markers = new ArrayList<Marker>();
 	private List<Polyline> polylines = new ArrayList<Polyline>();
 	private List<Circle> circles = new ArrayList<Circle>();
+
 	private String label;
+	private String id;
+
 	private boolean checked = true;
+	private boolean isVisible = true;
+
 	private boolean clusterEnabled = false;
 	private int clusterDisableAtZoom = 19;
 	private int clusterMaxRadius = 80;
@@ -95,7 +100,7 @@ public class Layer {
 	}
 
 	public boolean isChecked() {
-		return checked;
+		return this.checked;
 	}
 
 	/**
@@ -118,6 +123,15 @@ public class Layer {
 		return this;
 	}
 
+	public String getId() {
+		return this.id;
+	}
+
+	public Layer setId(final String id) {
+		this.id = id;
+		return this;
+	}
+
 	public List<Marker> getMarkers() {
 		return markers;
 	}
@@ -127,12 +141,26 @@ public class Layer {
 		return this;
 	}
 
-	public Layer addMarker(Marker marker)
-	{
+	public Layer addMarker(Marker marker) {
 		this.markers.add(marker);
 		return this;
 	}
 
+	public Layer setVisible(final boolean isVisible) {
+		this.isVisible = isVisible;
+		return this;
+	}
+
+	public boolean isVisible() {
+		return this.isVisible;
+	}
+
+	/**
+	 * Changes the visibility of this layer.
+	 */
+	public void changeVisibility() {
+		this.isVisible = !this.isVisible;
+	}
 	@Override
 	public String toString() {
 		return "Layer [markers=" + markers.toString() + ", polylines=" + polylines.toString()
