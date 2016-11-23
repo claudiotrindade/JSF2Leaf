@@ -17,6 +17,11 @@ package com.jsf2leaf.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Layer java model.
+ * Note that the id parameter is a name of layer variable visible in java script (it is optional).
+ * To add some java script logic for that layer you can find this layer under the name specified by id.
+ */
 public class Layer {
 
 	private List<Marker> markers = new ArrayList<Marker>();
@@ -170,5 +175,11 @@ public class Layer {
 				+ clusterMaxRadius + "]";
 	}
 
+	/**
+	 * @return true if layer has id that is not empty
+	 */
+	public boolean hasId() {
+		return this.id != null && !this.id.isEmpty();
+	}
 
 }

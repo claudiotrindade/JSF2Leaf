@@ -51,20 +51,18 @@ GNU General Public License for more details.
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
 
     <script type="text/javascript">
-        var map_#{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
-        
-        L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(map_#{cc.attrs.id});
+        var #{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
+        var #{cc.attrs.id}_layers = [];
+        L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(#{cc.attrs.id});
 
-        if(#{cc.mapObject.layerControl}) {
-            var layers = L.control.layers();
-        }
-    
+        var layers = L.control.layers();
+
         if(!#{cc.mapObject.zoomEnabled}) {
-            map_#{cc.attrs.id}.touchZoom.disable();
-            map_#{cc.attrs.id}.doubleClickZoom.disable();
-            map_#{cc.attrs.id}.scrollWheelZoom.disable();
-            map_#{cc.attrs.id}.boxZoom.disable();
-            map_#{cc.attrs.id}.keyboard.disable();
+            #{cc.attrs.id}.touchZoom.disable();
+            #{cc.attrs.id}.doubleClickZoom.disable();
+            #{cc.attrs.id}.scrollWheelZoom.disable();
+            #{cc.attrs.id}.boxZoom.disable();
+            #{cc.attrs.id}.keyboard.disable();
         }
 
         if(#{cc.mapObject.miniMap}) {
@@ -74,16 +72,18 @@ GNU General Public License for more details.
                 position: '#{cc.mapObject.miniMapPosition}',
                 width: #{cc.mapObject.miniMapWidth},
                 height: #{cc.mapObject.miniMapHeight}
-            }).addTo(map_#{cc.attrs.id});
+            }).addTo(#{cc.attrs.id});
         }
 
         //Layers
-        <ui:repeat value="#{cc.mapObject.layers}" var="layer">    
-            
-            var layer = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.LayerGroup();
+        <ui:repeat value="#{cc.mapObject.layers}" var="layer">
+
+            <ui:param name="layer_unique_name" value="#{layer.hasId() ? layer.id : 'layer'}" />
+                console.log("LAYER UNIQUE NAME" + "#{layer_unique_name}");
+            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.LayerGroup();
         
             if(#{cc.mapObject.layerControl}) {
-                layers.addOverlay(layer, "#{layer.label}");
+                layers.addOverlay(#{layer_unique_name}, "#{layer.label}");
             }
             
             //Markers
@@ -100,9 +100,9 @@ GNU General Public License for more details.
                 if('#{marker.popupMsg}')
                     marker.bindPopup('#{marker.popupMsg}');
                 
-                marker.addTo(layer);
+                marker.addTo(#{layer_unique_name});
                 
-                map_#{cc.attrs.id}.addLayer(layer);
+                #{cc.attrs.id}.addLayer(#{layer_unique_name});
             </ui:repeat>
             
             //Polylines
@@ -116,7 +116,7 @@ GNU General Public License for more details.
                 if('#{polyline.popupMsg}')
                     poly.bindPopup('#{polyline.popupMsg}');
         
-                poly.addTo(layer);
+                poly.addTo(#{layer_unique_name});
             </ui:repeat>
             
             //Circles
@@ -126,16 +126,17 @@ GNU General Public License for more details.
                 if('#{circle.popupMsg}')
                     circle.bindPopup('#{circle.popupMsg}');
                 
-                circle.addTo(layer);
+                circle.addTo(#{layer_unique_name});
             </ui:repeat>
             
             if(#{layer.visible}) {
-                map_#{cc.attrs.id}.addLayer(layer);
+                #{cc.attrs.id}.addLayer(#{layer_unique_name});
+                #{cc.attrs.id}_layers.push(#{layer_unique_name});
             }
         </ui:repeat>
 
         if(#{cc.mapObject.layerControl}) {
-            layers.addTo(map_#{cc.attrs.id});
+            layers.addTo(#{cc.attrs.id});
         }
     </script>
     
