@@ -53,6 +53,8 @@ GNU General Public License for more details.
     <script type="text/javascript">
         var #{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
         var #{cc.attrs.id}_layers = [];
+        var #{cc.attrs.id}_layers_map = new Object();
+
         L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(#{cc.attrs.id});
 
         var layers = L.control.layers();
@@ -131,8 +133,9 @@ GNU General Public License for more details.
             
             if(#{layer.visible}) {
                 #{cc.attrs.id}.addLayer(#{layer_unique_name});
-                #{cc.attrs.id}_layers.push(#{layer_unique_name});
             }
+            #{cc.attrs.id}_layers.push(#{layer_unique_name});
+            #{cc.attrs.id}_layers_map['#{layer_unique_name}'] = #{layer_unique_name};
         </ui:repeat>
 
         if(#{cc.mapObject.layerControl}) {
