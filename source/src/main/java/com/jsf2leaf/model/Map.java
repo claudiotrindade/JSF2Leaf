@@ -14,6 +14,8 @@ GNU General Public License for more details.*/
 
 package com.jsf2leaf.model;
 
+import com.jsf2leaf.options.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,8 @@ public class Map {
 	private int miniMapHeight = 100;
 	private String miniMapPosition = "bottomright";
 	private String urlTemplate = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+
+	private Position layerControlPosition = Position.BOTTOM_LEFT;
 
 	public List<Layer> getLayers() {
 		return layers;
@@ -60,6 +64,15 @@ public class Map {
 	 */
 	public Map setLayerControl(boolean layerControl) {
 		this.layerControl = layerControl;
+		return this;
+	}
+
+	public Position getLayerControlPosition() {
+		return layerControlPosition;
+	}
+
+	public Map setLayerControlPosition(final Position position) {
+		this.layerControlPosition = position;
 		return this;
 	}
 

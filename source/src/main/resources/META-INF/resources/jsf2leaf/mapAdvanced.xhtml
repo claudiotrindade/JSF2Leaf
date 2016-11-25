@@ -55,7 +55,7 @@ GNU General Public License for more details.
         var #{cc.attrs.id}_layers = [];
         L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(#{cc.attrs.id});
 
-        var layers = L.control.layers();
+        var layers = L.control.layers(null, null, {position: '#{cc.mapObject.layerControlPosition.value}'});
 
         if(!#{cc.mapObject.zoomEnabled}) {
             #{cc.attrs.id}.touchZoom.disable();
