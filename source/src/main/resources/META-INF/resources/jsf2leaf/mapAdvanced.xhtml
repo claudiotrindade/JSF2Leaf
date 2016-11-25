@@ -65,13 +65,13 @@ GNU General Public License for more details.
             #{cc.attrs.id}.keyboard.disable();
         }
 
-        if(#{cc.mapObject.miniMap}) {
+        if(#{cc.mapObject.miniMapEnabled}) {
             new L.Control.MiniMap(L.tileLayer('#{cc.mapObject.urlTemplate}', {}), {
-                toggleDisplay: true,
-                zoomAnimation: true,
-                position: '#{cc.mapObject.miniMapPosition}',
-                width: #{cc.mapObject.miniMapWidth},
-                height: #{cc.mapObject.miniMapHeight}
+                toggleDisplay: '#{cc.mapObject.miniMap.toggleDisplay}',
+                zoomAnimation: '#{cc.mapObject.miniMap.zoomAnimation}',
+                position: '#{cc.mapObject.miniMap.position.value}',
+                width: '#{cc.mapObject.miniMap.width}',
+                height: '#{cc.mapObject.miniMap.height}'
             }).addTo(#{cc.attrs.id});
         }
 

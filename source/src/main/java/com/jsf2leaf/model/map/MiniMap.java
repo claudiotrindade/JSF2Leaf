@@ -30,6 +30,50 @@ public class MiniMap {
         super();
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(final int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(final int height) {
+        this.height = height;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(final Position position) {
+        this.position = position;
+    }
+
+    public boolean isToggleDisplay() {
+        return toggleDisplay;
+    }
+
+    public void setToggleDisplay(final boolean toggleDisplay) {
+        this.toggleDisplay = toggleDisplay;
+    }
+
+    public boolean isZoomAnimation() {
+        return zoomAnimation;
+    }
+
+    public void setZoomAnimation(final boolean zoomAnimation) {
+        this.zoomAnimation = zoomAnimation;
+    }
+
     /**
      * Builder for min map.
      * <ul>
@@ -40,7 +84,10 @@ public class MiniMap {
      *     <li>zoomAnimation - true</li>
      * </ul>
      */
+
     public static class Builder {
+
+        private Builder() { }
 
         private int width = 100;
 
@@ -97,8 +144,8 @@ public class MiniMap {
          * Sets zoomAnimation property. Default true.
          * @return Builder
          */
-        public Builder withPosition(final boolean zoomAnimation) {
-            this.zoomAnimation = zoomAnimation;
+        public Builder withPosition(final Position position) {
+            this.position = position;
             return this;
         }
     }

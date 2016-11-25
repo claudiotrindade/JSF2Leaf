@@ -39,10 +39,6 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		//Configure Map
 		springfieldMap.setWidth("350px").setHeight("250px").setCenter(new LatLong("42.111707","-72.541008")).setZoom(13);
                 springfieldMap.setAttribution("JSF2Leaf | Your business");
-                springfieldMap.setMiniMap(true);
-                springfieldMap.setMiniMapWidth(100);
-                springfieldMap.setMiniMapHeight(66);
-                springfieldMap.setMiniMapPosition("bottomright");
 
 		//Places Layer
 		Layer placesLayer = (new Layer()).setLabel("Places");

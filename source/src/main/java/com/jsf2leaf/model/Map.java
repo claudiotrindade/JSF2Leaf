@@ -14,6 +14,7 @@ GNU General Public License for more details.*/
 
 package com.jsf2leaf.model;
 
+import com.jsf2leaf.model.map.MiniMap;
 import com.jsf2leaf.options.Position;
 
 import java.util.ArrayList;
@@ -21,244 +22,211 @@ import java.util.List;
 
 public class Map {
 
-	List<Layer> layers = new ArrayList<Layer>();
-	private LatLong center;
-	private String width = "300px";
-	private String height = "200px";
-	private String attribution = "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors,<a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>";
-	private int zoom = 1;
-	private int minZoom = 1;
-	private int maxZoom = 19;
-	private boolean zoomControl = true;
-	private boolean zoomEnabled = true;	
-	private boolean draggingEnabled = true;
-	private boolean layerControl = true;
-	private boolean miniMap = true;
-	private int miniMapWidth = 100;
-	private int miniMapHeight = 100;
-	private String miniMapPosition = "bottomright";
-	private String urlTemplate = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+    List<Layer> layers = new ArrayList<Layer>();
+    private MiniMap miniMap;
+    private LatLong center;
+    private String width = "300px";
+    private String height = "200px";
+    private String attribution = "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors,<a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>";
+    private int zoom = 1;
+    private int minZoom = 1;
+    private int maxZoom = 19;
+    private boolean zoomControl = true;
+    private boolean zoomEnabled = true;
+    private boolean draggingEnabled = true;
+    private boolean layerControl = true;
+    private String urlTemplate = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 
-	private Position layerControlPosition = Position.BOTTOM_LEFT;
+    private Position layerControlPosition = Position.BOTTOM_LEFT;
 
-	public List<Layer> getLayers() {
-		return layers;
-	}
+    public List<Layer> getLayers() {
+        return layers;
+    }
 
-	public Map addLayer(List<Layer> layers) {
-		this.layers.addAll(layers);
-		return this;
-	}
+    public Map addLayer(List<Layer> layers) {
+        this.layers.addAll(layers);
+        return this;
+    }
 
-	public Map addLayer(Layer layer) {
-		this.layers.add(layer);
-		return this;
-	}
+    public Map addLayer(Layer layer) {
+        this.layers.add(layer);
+        return this;
+    }
 
-	public boolean isLayerControl() {
-		return layerControl;
-	}
+    public Map withMiniMap(final MiniMap miniMap) {
+        this.miniMap = miniMap;
+        return this;
+    }
 
-	/**
-	 * Set if the Map will have the layers checkbox control panel
-	 */
-	public Map setLayerControl(boolean layerControl) {
-		this.layerControl = layerControl;
-		return this;
-	}
+    public MiniMap getMiniMap() {
+        return miniMap;
+    }
 
-	public Position getLayerControlPosition() {
-		return layerControlPosition;
-	}
+    public boolean isLayerControl() {
+        return layerControl;
+    }
 
-	public Map setLayerControlPosition(final Position position) {
-		this.layerControlPosition = position;
-		return this;
-	}
+    /**
+     * Set if the Map will have the layers checkbox control panel
+     */
+    public Map setLayerControl(boolean layerControl) {
+        this.layerControl = layerControl;
+        return this;
+    }
 
-	public String getWidth() {
-		return width;
-	}
+    public Position getLayerControlPosition() {
+        return layerControlPosition;
+    }
 
-	public Map setWidth(String width) {
-		this.width = width;
-		return this;
-	}
+    public Map setLayerControlPosition(final Position position) {
+        this.layerControlPosition = position;
+        return this;
+    }
 
-	public String getHeight() {
-		return height;
-	}
+    public String getWidth() {
+        return width;
+    }
 
-	public Map setHeight(String height) {
-		this.height = height;
-		return this;
-	}
+    public Map setWidth(String width) {
+        this.width = width;
+        return this;
+    }
 
-	public LatLong getCenter() {
-		return center;
-	}
+    public String getHeight() {
+        return height;
+    }
 
-	/**
-	 * Set the Map start position
-	 */
-	public Map setCenter(LatLong center) {
-		this.center = center;
-		return this;
-	}
+    public Map setHeight(String height) {
+        this.height = height;
+        return this;
+    }
 
-	public String getAttribution() {
-		return attribution;
-	}
+    public LatLong getCenter() {
+        return center;
+    }
 
-	/**
-	 * Set the Map attribution/credits
-	 */
-	public Map setAttribution(String attribution) {
-		this.attribution = attribution;
-		return this;
-	}
+    /**
+     * Set the Map start position
+     */
+    public Map setCenter(LatLong center) {
+        this.center = center;
+        return this;
+    }
 
-	public int getZoom() {
-		return zoom;
-	}
+    public String getAttribution() {
+        return attribution;
+    }
 
-	/**
-	 * Set the initial Map zoom
-	 */
-	public Map setZoom(int zoom) {
-		this.zoom = zoom;
-		return this;
-	}
+    /**
+     * Set the Map attribution/credits
+     */
+    public Map setAttribution(String attribution) {
+        this.attribution = attribution;
+        return this;
+    }
 
-	public int getMinZoom() {
-		return minZoom;
-	}
+    public int getZoom() {
+        return zoom;
+    }
 
-	/**
-	 * Set the minimum allowed zoom of the Map 
-	 */
-	public Map setMinZoom(int minZoom) {
-		this.minZoom = minZoom;
-		return this;
-	}
+    /**
+     * Set the initial Map zoom
+     */
+    public Map setZoom(int zoom) {
+        this.zoom = zoom;
+        return this;
+    }
 
-	public int getMaxZoom() {
-		return maxZoom;
-	}
+    public int getMinZoom() {
+        return minZoom;
+    }
 
-	/**
-	 * Set the maximum allowed zoom of the Map 
-	 */
-	public Map setMaxZoom(int maxZoom) {
-		this.maxZoom = maxZoom;
-		return this;
-	}
+    /**
+     * Set the minimum allowed zoom of the Map
+     */
+    public Map setMinZoom(int minZoom) {
+        this.minZoom = minZoom;
+        return this;
+    }
 
-	public boolean isZoomControl() {
-		return zoomControl;
-	}
+    public int getMaxZoom() {
+        return maxZoom;
+    }
 
-	/**
-	 * Set if the Map will have the zoom buttons 
-	 */
-	public Map setZoomControl(boolean zoomControl) {
-		this.zoomControl = zoomControl;
-		return this;
-	}
+    /**
+     * Set the maximum allowed zoom of the Map
+     */
+    public Map setMaxZoom(int maxZoom) {
+        this.maxZoom = maxZoom;
+        return this;
+    }
 
-	public boolean isZoomEnabled() {
-		return zoomEnabled;
-	}
+    public boolean isZoomControl() {
+        return zoomControl;
+    }
 
-	/**
-	 * Set if zoom will be available on the Map 
-	 */
-	public Map setZoomEnabled(boolean zoomEnabled) {
-		this.zoomEnabled = zoomEnabled;
-		return this;
-	}
+    /**
+     * Set if the Map will have the zoom buttons
+     */
+    public Map setZoomControl(boolean zoomControl) {
+        this.zoomControl = zoomControl;
+        return this;
+    }
 
-	public boolean isDraggingEnabled() {
-		return draggingEnabled;
-	}
+    public boolean isZoomEnabled() {
+        return zoomEnabled;
+    }
 
-	/**
-	 * Set if the Map will be allowed do move 
-	 */
-	public Map setDraggingEnabled(boolean draggingEnabled) {
-		this.draggingEnabled = draggingEnabled;
-		return this;
-	   }
+    /**
+     * Set if zoom will be available on the Map
+     */
+    public Map setZoomEnabled(boolean zoomEnabled) {
+        this.zoomEnabled = zoomEnabled;
+        return this;
+    }
 
-        public boolean isMiniMap() {
-                return miniMap;
-        }
+    public boolean isDraggingEnabled() {
+        return draggingEnabled;
+    }
 
-        /**
-         * Set if the Map will be allowed do draw a minmap
-         */
-        public void setMiniMap(boolean miniMap) {
-                this.miniMap = miniMap;
-        }
+    /**
+     * Set if the Map will be allowed do move
+     */
+    public Map setDraggingEnabled(boolean draggingEnabled) {
+        this.draggingEnabled = draggingEnabled;
+        return this;
+    }
 
-        public int getMiniMapWidth() {
-            return miniMapWidth;
-        }
+    /**
+     * @return true if this map has {@link MiniMap} object set
+     */
+    public boolean isMiniMapEnabled() {
+        return this.miniMap != null;
+    }
 
-        /**
-         * Set the width of the minimap. Example : "100px".
-         */
-        public void setMiniMapWidth(int miniMapWidth) {
-              this.miniMapWidth = miniMapWidth;
-        }
+    public String getUrlTemplate() {
+        return urlTemplate;
+    }
 
-        public int getMiniMapHeight() {
-              return miniMapHeight;
-        }
+    /**
+     * Set the url of template (for example if you are offline).
+     *
+     * @param urlTemplate
+     */
+    public void setUrlTemplate(String urlTemplate) {
+        this.urlTemplate = urlTemplate;
+    }
 
-        /**
-         * Set the height of the minimap. Example : "100px".
-         */
-        public void setMiniMapHeight(int miniMapHeight) {
-              this.miniMapHeight = miniMapHeight;
-        }
-
-        public String getMiniMapPosition() {
-                return miniMapPosition;
-        }
-
-        /**
-         * Set the position of the minimap. Example : "nottomleft".
-         */
-        public void setMiniMapPosition(String miniMapPosition) {
-               this.miniMapPosition = miniMapPosition;
-        }
-
-        public String getUrlTemplate() {
-            return urlTemplate;
-        }
-
-        /**
-         * Set the url of template (for example if you are offline).
-         * @param urlTemplate 
-         */
-        public void setUrlTemplate(String urlTemplate) {
-            this.urlTemplate = urlTemplate;
-        }
-        
-	@Override
-	public String toString() {
-		return "Map [layers=" + layers.toString() + ", center=" + center + ", width="
-				+ width + ", height=" + height + ", attribution=" + attribution
-				+ ", zoom=" + zoom + ", minZoom=" + minZoom + ", maxZoom="
-				+ maxZoom + ", zoomControl=" + zoomControl + ", zoomEnabled="
-				+ zoomEnabled + ", dragging=" + draggingEnabled + ", layerControl="
-                                + ", miniMap=" + miniMap
-                                + ", miniMapWidth=" + miniMapWidth
-                                + ", miniMapHeight=" + miniMapHeight
-                                + ", miniMapPosition=" + miniMapPosition
-                                + ", urlTemplate=" + urlTemplate
-				+ layerControl + "]";
-	}
+    @Override
+    public String toString() {
+        return "Map [layers=" + layers.toString() + ", center=" + center + ", width="
+                + width + ", height=" + height + ", attribution=" + attribution
+                + ", zoom=" + zoom + ", minZoom=" + minZoom + ", maxZoom="
+                + maxZoom + ", zoomControl=" + zoomControl + ", zoomEnabled="
+                + zoomEnabled + ", dragging=" + draggingEnabled + ", layerControl=" + layerControl
+                + ", miniMap=" + miniMap
+                + ", urlTemplate=" + urlTemplate
+                + layerControl + "]";
+    }
 
 }
