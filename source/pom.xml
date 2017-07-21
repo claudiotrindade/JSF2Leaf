@@ -4,9 +4,11 @@
     <groupId>jsf2leaf</groupId>
     <artifactId>jsf2leaf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
+    <!--  <packaging>jar</packaging>  Uncomment this when need build jar, and comment the next -->
+    <packaging>war</packaging>
+	
     <build>
+    	<!-- JAR -->
         <finalName>jsf2leaf</finalName>
         <defaultGoal>install</defaultGoal>
         <pluginManagement>
@@ -31,6 +33,27 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        
+        <!-- WAR -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
     </build>
 
     <dependencies>
