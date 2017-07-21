@@ -3,10 +3,12 @@ package com.jsf2leaf.model.legend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jsf2leaf.options.Position;
+
 public class Legend {
 	
 	private List<Grade> grades = new ArrayList<Grade>();
-	private String position = "bottomleft";
+	private Position position = Position.BOTTOM_RIGHT;
 	
 	public List<Grade> getGrades() {
 		return this.grades;
@@ -31,17 +33,15 @@ public class Legend {
 	/**
 	 * @return the position
 	 */
-	public String getPosition() {
+	public Position getPosition() {
 		return position;
 	}
 
 	/**
 	 * @param position the position to set
 	 */
-	public void setPosition(String position) {
+	public void setPosition(Position position) {
 		this.position = position;
 	}
-	
-	
 
 }

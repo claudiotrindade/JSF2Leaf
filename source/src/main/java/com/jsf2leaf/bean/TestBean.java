@@ -14,6 +14,11 @@ GNU General Public License for more details.*/
 
 package com.jsf2leaf.bean;
 
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+
 import com.jsf2leaf.model.Circle;
 import com.jsf2leaf.model.LatLong;
 import com.jsf2leaf.model.Layer;
@@ -21,12 +26,8 @@ import com.jsf2leaf.model.Map;
 import com.jsf2leaf.model.Marker;
 import com.jsf2leaf.model.Polyline;
 import com.jsf2leaf.model.Pulse;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
-
-
-import java.io.Serializable;
+import com.jsf2leaf.model.legend.Legend;
+import com.jsf2leaf.options.Position;
 
 @ManagedBean(name = "testBean")
 @ViewScoped 
@@ -58,6 +59,19 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		polycircleLayer.addPolyline((new Polyline()).addPoint(new LatLong("42.114556","-72.526309")).addPoint(new LatLong("42.120000","-72.540000")).addPoint(new LatLong("42.120286","-72.547488")));
 		polycircleLayer.addCircle((new Circle()).setPosition(new LatLong("42.111707","-72.541008")));
 		springfieldMap.addLayer(polycircleLayer);
+		
+		//Legend
+		Legend legend = new Legend();
+		legend.setPosition(Position.BOTTOM_RIGHT);
+		legend.addGrade(0, "0-10", "#FFEDA0");
+		legend.addGrade(10, "10-20", "#FED976");
+		legend.addGrade(20, "20-50", "#FEB24C");
+		legend.addGrade(50, "50-100", "#FD8D3C");
+		legend.addGrade(100, "100-200", "#FC4E2A");
+		legend.addGrade(200, "200-500", "#E31A1C");
+		legend.addGrade(500, "500-1000", "#BD0026");
+		legend.addGrade(1000, "1000+", "#800026");
+		springfieldMap.setLegend(legend);
 	}
 
 	public Map getSpringfieldMap() {

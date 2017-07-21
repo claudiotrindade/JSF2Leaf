@@ -80,7 +80,7 @@ GNU General Public License for more details.
         }
         
         if(#{cc.mapObject.legend != null}) {
-			var legend = new L.Control({position: '#{cc.mapObject.legend.position}'});
+			var legend = new L.Control({position: '#{cc.mapObject.legend.position.value}'});
 
 			legend.onAdd = function (map) {
 
@@ -93,7 +93,7 @@ GNU General Public License for more details.
 			    return div;
 			};
 
-			legend.addTo(map_#{cc.attrs.id});
+			legend.addTo(#{cc.attrs.id});
 		}
 
         //Layers
