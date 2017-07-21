@@ -14,11 +14,12 @@ GNU General Public License for more details.*/
 
 package com.jsf2leaf.model;
 
-import com.jsf2leaf.model.map.MiniMap;
-import com.jsf2leaf.options.Position;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.jsf2leaf.model.legend.Legend;
+import com.jsf2leaf.model.map.MiniMap;
+import com.jsf2leaf.options.Position;
 
 public class Map {
 
@@ -36,6 +37,7 @@ public class Map {
     private boolean draggingEnabled = true;
     private boolean layerControl = true;
     private String urlTemplate = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+    private Legend legend;
 
     private Position layerControlPosition = Position.BOTTOM_LEFT;
 
@@ -216,6 +218,19 @@ public class Map {
     public void setUrlTemplate(String urlTemplate) {
         this.urlTemplate = urlTemplate;
     }
+    
+	public Legend getLegend() {
+		return legend;
+	}
+
+	/**
+     * Set the legend.
+     *
+     * @param legend
+     */
+	public void setLegend(Legend legend) {
+		this.legend = legend;
+	}
 
     @Override
     public String toString() {

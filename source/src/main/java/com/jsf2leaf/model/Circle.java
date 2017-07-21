@@ -18,11 +18,8 @@ public class Circle {
 	
 	private LatLong position;
 	private int radius = 200;
-	private int weight = 5;
-	private double fillOpacity = 0.2;
-	private String color = "black";
-	private String fillColor = "blue";
 	private String popupMsg;
+	private Style style = new Style();
 	
 	public String getPopupMsg() {
 		return popupMsg;
@@ -34,7 +31,7 @@ public class Circle {
 	}
 
 	public int getWeight() {
-		return weight;
+		return style.getWeight();
 	}
 
 	/**
@@ -42,21 +39,21 @@ public class Circle {
 	 * @param weight Width in pixels
 	 */
 	public Circle setWeight(int weight) {
-		this.weight = weight;
+		this.style.setWeight(weight);
 		return this;
 	}
 
 	public String getColor() {
-		return color;
+		return style.getColor();
 	}
 
 	public Circle setColor(String color) {
-		this.color = color;
+		this.style.setColor(color);
 		return this;
 	}
 
 	public String getFillColor() {
-		return fillColor;
+		return style.getFillColor();
 	}
 
 	/**
@@ -64,12 +61,12 @@ public class Circle {
 	 * @param fillColor Ex: "blue" or "#FF0000"
 	 */
 	public Circle setFillColor(String fillColor) {
-		this.fillColor = fillColor;
+		this.style.setFillColor(fillColor);
 		return this;
 	}
 
 	public double getFillOpacity() {
-		return fillOpacity;
+		return style.getFillOpacity();
 	}
 
 	/**
@@ -77,7 +74,7 @@ public class Circle {
 	 * @param fillOpacity Accepts 0.0 to 1.0, Where 0.0 = Transparent and 1.0 = Solid 
 	 */
 	public Circle setFillOpacity(double fillOpacity) {
-		this.fillOpacity = fillOpacity;
+		this.style.setFillOpacity(fillOpacity);
 		return this;
 	}
 
@@ -105,12 +102,25 @@ public class Circle {
 		this.radius = radius;
 		return this;
 	}
+	
+	public Style getStyle() {
+		return style;
+	}
+	
+	/**
+	 * Set the Circle style
+	 * @param style
+	 */
+	public Circle setStyle(Style style) {
+		this.style = style;
+		return this;
+	}
 
 	@Override
 	public String toString() {
 		return "Circle [position=" + position.toString() + ", radius=" + radius
-				+ ", color=" + color + ", fillColor=" + fillColor
-				+ ", fillOpacity=" + fillOpacity + ", weight=" + weight
+				+ ", color=" + style.getColor() + ", fillColor=" + style.getFillColor()
+				+ ", fillOpacity=" + style.getFillOpacity() + ", weight=" + style.getWeight()
 				+ ", popupMsg=" + popupMsg + "]";
 	}
 	

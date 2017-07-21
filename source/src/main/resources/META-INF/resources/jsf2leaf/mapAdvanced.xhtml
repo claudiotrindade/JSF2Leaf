@@ -40,6 +40,8 @@ GNU General Public License for more details.
                 
         <link rel="stylesheet" href="#{resource['css:L.Icon.Pulse.css']}" />
         <script src="#{resource['js:L.Icon.Pulse.js']}"></script>
+        
+        <link rel="stylesheet" href="#{resource['css:legend.css']}" />
     </head>
 
     <style type="text/css">
@@ -76,6 +78,23 @@ GNU General Public License for more details.
                 height: '#{cc.mapObject.miniMap.height}'
             }).addTo(#{cc.attrs.id});
         }
+        
+        if(#{cc.mapObject.legend != null}) {
+			var legend = new L.Control({position: '#{cc.mapObject.legend.position}'});
+
+			legend.onAdd = function (map) {
+
+			    var div = L.DomUtil.create('div', 'info legend');
+
+			    <ui:repeat value="#{cc.mapObject.legend.grades}" var="grade">
+				    div.innerHTML += '<i style="background:' + '#{grade.color}' + '"></i>' + '#{!grade.label.isEmpty() ? grade.label : grade.value}' + '<br/>';
+			    </ui:repeat>
+
+			    return div;
+			};
+
+			legend.addTo(map_#{cc.attrs.id});
+		}
 
         //Layers
         <ui:repeat value="#{cc.mapObject.layers}" var="layer">
@@ -109,7 +128,7 @@ GNU General Public License for more details.
             
             //Polylines
             <ui:repeat value="#{layer.polylines}" var="polyline">
-                var poly = L.polyline([],{color: '#{polyline.color}', weight: #{polyline.weight}});
+                var poly = L.polyline([],{color: '#{polyline.style.color}', weight: #{polyline.style.weight}, fill: #{polyline.style.fill}, fillColor: '#{polyline.style.fillColor}', fillOpacity: #{polyline.style.fillOpacity}});
         
                 <ui:repeat value="#{polyline.points}" var="point">
                     poly.addLatLng(L.latLng(#{point.latitude},#{point.longitude}));
@@ -123,7 +142,7 @@ GNU General Public License for more details.
             
             //Circles
             <ui:repeat value="#{layer.circles}" var="circle">
-                var circle = L.circle([#{circle.position.latitude},#{circle.position.longitude}], #{circle.radius},{color: '#{circle.color}',  weight: #{circle.weight}, fillColor: '#{circle.fillColor}', fillOpacity: #{circle.fillOpacity}});
+                var circle = L.circle([#{circle.position.latitude},#{circle.position.longitude}], #{circle.radius},{color: '#{circle.style.color}', weight: #{circle.style.weight}, fill: #{circle.style.fill}, fillColor: '#{circle.style.fillColor}', fillOpacity: #{circle.style.fillOpacity}});
                 
                 if('#{circle.popupMsg}')
                     circle.bindPopup('#{circle.popupMsg}');

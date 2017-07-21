@@ -20,9 +20,8 @@ import java.util.List;
 public class Polyline {
 	
 	private List<LatLong> points = new ArrayList<LatLong>();
-	private String color = "blue";
-	private int weight = 5;
 	private String popupMsg;
+	private Style style = new Style();
 	
 	public String getPopupMsg() {
 		return popupMsg;
@@ -32,18 +31,18 @@ public class Polyline {
 		this.popupMsg = popupMsg;
 		return this;
 	}
-
+	
 	public String getColor() {
-		return color;
+		return this.style.getColor();
 	}
 
 	public Polyline setColor(String color) {
-		this.color = color;
+		this.style.setColor(color);
 		return this;
 	}
 
 	public int getWeight() {
-		return weight;
+		return this.style.getWeight();
 	}
 
 	/**
@@ -51,7 +50,20 @@ public class Polyline {
 	 * @param weight Width in pixels
 	 */
 	public Polyline setWeight(int weight) {
-		this.weight = weight;
+		this.style.setWeight(weight);
+		return this;
+	}
+
+	public Style getStyle() {
+		return style;
+	}
+
+	/**
+	 * Set the style of the Polyline
+	 * @param style
+	 */
+	public Polyline setStyle(Style style) {
+		this.style = style;
 		return this;
 	}
 
@@ -71,8 +83,8 @@ public class Polyline {
 
 	@Override
 	public String toString() {
-		return "Polyline [points=" + points.toString() + ", color=" + color + ", weight="
-				+ weight + ", popupMsg=" + popupMsg + "]";
+		return "Polyline [points=" + points.toString() + ", color=" + style.getColor() + ", weight="
+				+ style.getWeight() + ", popupMsg=" + popupMsg + "]";
 	}
 	
 }

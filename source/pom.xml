@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
 
     <build>
-        <finalName>jsf2Leaf-0.0.1-SNAPSHOT</finalName>
+        <finalName>jsf2leaf</finalName>
         <defaultGoal>install</defaultGoal>
         <pluginManagement>
             <plugins>
