@@ -37,6 +37,7 @@ public class Map {
     private boolean draggingEnabled = true;
     private boolean layerControl = true;
     private String urlTemplate = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+    private String id = "osm";
     private Legend legend;
 
     private Position layerControlPosition = Position.BOTTOM_LEFT;
@@ -215,8 +216,23 @@ public class Map {
      *
      * @param urlTemplate
      */
-    public void setUrlTemplate(String urlTemplate) {
+    public Map setUrlTemplate(String urlTemplate) {
         this.urlTemplate = urlTemplate;
+        return this;
+    }
+    
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the id of template.
+     *
+     * @param id
+     */
+    public Map setId(String id) {
+        this.id = id;
+        return this;
     }
     
 	public Legend getLegend() {

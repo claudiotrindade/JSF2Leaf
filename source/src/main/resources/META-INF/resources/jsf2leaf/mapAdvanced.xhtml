@@ -59,7 +59,7 @@ GNU General Public License for more details.
         var #{cc.attrs.id}_layers = [];
         var #{cc.attrs.id}_layers_map = new Object();
 
-        L.tileLayer('#{cc.mapObject.urlTemplate}', {id: 'osm', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(#{cc.attrs.id});
+        L.tileLayer('#{cc.mapObject.urlTemplate}', {id: '#{cc.mapObject.id}', attribution: '#{cc.mapObject.attribution}', maxZoom: #{cc.mapObject.maxZoom}, minZoom: #{cc.mapObject.minZoom}}).addTo(#{cc.attrs.id});
 
         var layers = L.control.layers(null, null, {position: '#{cc.mapObject.layerControlPosition.value}'});
 
