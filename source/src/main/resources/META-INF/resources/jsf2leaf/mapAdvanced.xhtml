@@ -29,11 +29,12 @@ GNU General Public License for more details.
 <composite:implementation>
 
     <head>
-        <link rel="stylesheet" href="#{resource['css:leaflet.css']}" />
-        <script src="#{resource['js:leaflet.js']}"></script>
+        <link rel="stylesheet" href="#{resource['css:leaflet-1.1.0.css']}" />
+		<script src="#{resource['js:leaflet-1.1.0.js']}"></script>
         
-        <link rel="stylesheet" href="#{resource['css:markercluster.css']}" />
-        <script src="#{resource['js:markercluster.js']}"></script>
+        <link rel="stylesheet" href="#{resource['css:MarkerCluster.Default-1.0.6.css']}" />
+        <link rel="stylesheet" href="#{resource['css:MarkerCluster-1.0.6.css']}" />
+		<script src="#{resource['js:leaflet.markercluster-1.0.6.js']}"></script>
                 
         <link rel="stylesheet" href="#{resource['css:Control.MiniMap.min.css']}" />
         <script src="#{resource['js:Control.MiniMap.min.js']}"></script>
@@ -53,6 +54,7 @@ GNU General Public License for more details.
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
 
     <script type="text/javascript">
+    
         var #{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
         var #{cc.attrs.id}_layers = [];
         var #{cc.attrs.id}_layers_map = new Object();
