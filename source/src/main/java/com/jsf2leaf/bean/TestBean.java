@@ -60,6 +60,7 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		polycircleLayer.addPolyline((new Polyline()).addPoint(new LatLong("42.114556","-72.526309")).addPoint(new LatLong("42.120000","-72.540000")).addPoint(new LatLong("42.120286","-72.547488")));
 		polycircleLayer.addCircle((new Circle()).setPosition(new LatLong("42.111707","-72.541008")));
 		springfieldMap.addLayer(polycircleLayer);
+		springfieldMap.getDraw().setLayer(polycircleLayer);
 		
 		//Legend
 		Legend legend = new Legend();

@@ -29,12 +29,11 @@ GNU General Public License for more details.
 <composite:implementation>
 
     <head>
-        <link rel="stylesheet" href="#{resource['css:leaflet-1.1.0.css']}" />
-		<script src="#{resource['js:leaflet-1.1.0.js']}"></script>
+    		<link rel="stylesheet" href="#{resource['css:leaflet.css']}" />
+        <script src="#{resource['js:leaflet.js']}"></script>
         
-        <link rel="stylesheet" href="#{resource['css:MarkerCluster.Default-1.0.6.css']}" />
-        <link rel="stylesheet" href="#{resource['css:MarkerCluster-1.0.6.css']}" />
-		<script src="#{resource['js:leaflet.markercluster-1.0.6.js']}"></script>
+        <link rel="stylesheet" href="#{resource['css:markercluster.css']}" />
+        <script src="#{resource['js:markercluster.js']}"></script>
                 
         <link rel="stylesheet" href="#{resource['css:Control.MiniMap.min.css']}" />
         <script src="#{resource['js:Control.MiniMap.min.js']}"></script>
@@ -42,13 +41,26 @@ GNU General Public License for more details.
         <link rel="stylesheet" href="#{resource['css:L.Icon.Pulse.css']}" />
         <script src="#{resource['js:L.Icon.Pulse.js']}"></script>
         
+        <link rel="stylesheet" href="#{resource['css:leaflet.draw-0.4.2.css']}" />
+        <script src="#{resource['js:leaflet.draw-0.4.2.js']}"></script>
+        
         <link rel="stylesheet" href="#{resource['css:legend.css']}" />
+
+        
     </head>
 
     <style type="text/css">
         .leaflet-control-layers-toggle {
             background-image: url('#{resource['images:layers.png']}') !important;
-            }
+        }
+        .leaflet-draw-toolbar a{
+        		background-image:url('#{resource['images:spritesheet.png']}') !important;
+        		background-image:linear-gradient(transparent,transparent),url('#{resource['images:spritesheet.svg']}') !important
+        	}
+        .leaflet-retina .leaflet-draw-toolbar a{
+        		background-image:url('#{resource['images:spritesheet-2x.png']}') !important;
+        		background-image:linear-gradient(transparent,transparent),url('#{resource['images:spritesheet.svg']}') !important
+        	}
     </style>
 
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
@@ -97,13 +109,13 @@ GNU General Public License for more details.
 
 			legend.addTo(#{cc.attrs.id});
 		}
-
+        
         //Layers
         <ui:repeat value="#{cc.mapObject.layers}" var="layer">
 
             <ui:param name="layer_unique_name" value="#{layer.hasId() ? layer.id : 'layer'}" />
-                console.log("LAYER UNIQUE NAME" + "#{layer_unique_name}");
-            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.LayerGroup();
+
+            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.FeatureGroup();
         
             if(#{cc.mapObject.layerControl}) {
                 layers.addOverlay(#{layer_unique_name}, "#{layer.label}");
@@ -124,8 +136,6 @@ GNU General Public License for more details.
                     marker.bindPopup('#{marker.popupMsg}');
                 
                 marker.addTo(#{layer_unique_name});
-                
-                #{cc.attrs.id}.addLayer(#{layer_unique_name});
             </ui:repeat>
             
             //Polylines
@@ -158,6 +168,37 @@ GNU General Public License for more details.
             #{cc.attrs.id}_layers.push(#{layer_unique_name});
             #{cc.attrs.id}_layers_map['#{layer_unique_name}'] = #{layer_unique_name};
         </ui:repeat>
+        
+        if(#{cc.mapObject.draw != null}) {
+        		if (#{cc.mapObject.draw.layer != null}) {
+		        var DrawCustomMarker = L.Icon.extend({
+		            options: {
+		                shadowUrl: null,
+		                iconUrl: '#{resource['images:marker-icon.png']}'
+		            }
+		        });
+		
+		        var drawControl = new L.Control.Draw({
+		            position: '#{cc.mapObject.draw.position.value}',
+		            draw: {
+		                marker: {
+		                    icon: new DrawCustomMarker()
+		                }
+		            },
+		            edit: {
+		                featureGroup: #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}]
+		            }
+		        });
+		        
+		        #{cc.attrs.id}.addControl(drawControl);
+		
+		        #{cc.attrs.id}.on(L.Draw.Event.CREATED, function (e) {
+		            var type = e.layerType,
+		                layer = e.layer;
+		            #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}].addLayer(layer);
+		        });
+        		}
+        }
 
         if(#{cc.mapObject.layerControl}) {
             layers.addTo(#{cc.attrs.id});

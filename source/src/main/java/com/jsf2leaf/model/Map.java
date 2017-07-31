@@ -17,6 +17,7 @@ package com.jsf2leaf.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jsf2leaf.model.draw.Draw;
 import com.jsf2leaf.model.legend.Legend;
 import com.jsf2leaf.model.map.MiniMap;
 import com.jsf2leaf.options.Position;
@@ -39,6 +40,7 @@ public class Map {
     private String urlTemplate = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
     private String id = "osm";
     private Legend legend;
+    private Draw draw = new Draw();
 
     private Position layerControlPosition = Position.BOTTOM_LEFT;
 
@@ -248,7 +250,15 @@ public class Map {
 		this.legend = legend;
 	}
 
-    @Override
+    public Draw getDraw() {
+		return draw;
+	}
+
+	public void setDraw(Draw draw) {
+		this.draw = draw;
+	}
+
+	@Override
     public String toString() {
         return "Map [layers=" + layers.toString() + ", center=" + center + ", width="
                 + width + ", height=" + height + ", attribution=" + attribution
