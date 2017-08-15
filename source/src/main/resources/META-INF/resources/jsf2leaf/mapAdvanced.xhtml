@@ -132,8 +132,9 @@ GNU General Public License for more details.
                 }
                 var marker = L.marker([#{marker.position.latitude}, #{marker.position.longitude}],{icon: icon});
                                         
-                if('#{marker.popupMsg}')
-                    marker.bindPopup('#{marker.popupMsg}');
+                if(#{!marker.popupMsg.isEmpty()}) {
+                    marker.bindPopup("#{marker.popupMsg}");
+                }
                 
                 marker.addTo(#{layer_unique_name});
             </ui:repeat>
@@ -146,8 +147,9 @@ GNU General Public License for more details.
                     poly.addLatLng(L.latLng(#{point.latitude},#{point.longitude}));
                 </ui:repeat>
                 
-                if('#{polyline.popupMsg}')
-                    poly.bindPopup('#{polyline.popupMsg}');
+                if(#{!polyline.popupMsg.isEmpty()}) {
+                    poly.bindPopup("#{polyline.popupMsg}");
+                }
         
                 poly.addTo(#{layer_unique_name});
             </ui:repeat>
@@ -156,8 +158,9 @@ GNU General Public License for more details.
             <ui:repeat value="#{layer.circles}" var="circle">
                 var circle = L.circle([#{circle.position.latitude},#{circle.position.longitude}], #{circle.radius},{color: '#{circle.style.color}', weight: #{circle.style.weight}, fill: #{circle.style.fill}, fillColor: '#{circle.style.fillColor}', fillOpacity: #{circle.style.fillOpacity}});
                 
-                if('#{circle.popupMsg}')
-                    circle.bindPopup('#{circle.popupMsg}');
+                if(#{!circle.popupMsg.isEmpty()}) {
+                    circle.bindPopup("#{circle.popupMsg}");
+                }
                 
                 circle.addTo(#{layer_unique_name});
             </ui:repeat>
