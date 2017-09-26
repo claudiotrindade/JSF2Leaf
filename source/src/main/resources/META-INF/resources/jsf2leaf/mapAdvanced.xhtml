@@ -65,14 +65,14 @@ GNU General Public License for more details.
 
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
 	
-	<h:form style="display:none">
-    		<h:inputText id="zoom" value="#{cc.mapObject.zoom}"> 
+	<h:form>
+    		<h:inputText id="zoom" value="#{cc.mapObject.zoom}" style="display:none"> 
 	    		<f:ajax />
     		</h:inputText>
-    		<h:inputText id="latitude" value="#{cc.mapObject.center.latitude}"> 
+    		<h:inputText id="latitude" value="#{cc.mapObject.center.latitude}" style="display:none"> 
 	    		<f:ajax render="outputlatitude" />
     		</h:inputText>
-    		<h:inputText id="longitude" value="#{cc.mapObject.center.longitude}"> 
+    		<h:inputText id="longitude" value="#{cc.mapObject.center.longitude}" style="display:none"> 
 	    		<f:ajax render="outputlongitude" />
     		</h:inputText>
 	</h:form>       
