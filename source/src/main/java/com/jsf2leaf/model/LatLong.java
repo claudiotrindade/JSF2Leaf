@@ -29,18 +29,16 @@ public class LatLong {
 		return latitude;
 	}
 	
-	public LatLong setLatitude(String latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
-		return this;
 	}
 	
 	public String getLongitude() {
 		return longitude;
 	}
 	
-	public LatLong setLongitude(String longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
-		return this;
 	}
 
 	@Override

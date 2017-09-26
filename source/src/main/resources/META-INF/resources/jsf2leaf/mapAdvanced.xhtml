@@ -69,6 +69,12 @@ GNU General Public License for more details.
     		<h:inputText id="zoom" value="#{cc.mapObject.zoom}"> 
 	    		<f:ajax />
     		</h:inputText>
+    		<h:inputText id="latitude" value="#{cc.mapObject.center.latitude}"> 
+	    		<f:ajax render="outputlatitude" />
+    		</h:inputText>
+    		<h:inputText id="longitude" value="#{cc.mapObject.center.longitude}"> 
+	    		<f:ajax render="outputlongitude" />
+    		</h:inputText>
 	</h:form>       
     
     <script type="text/javascript">
@@ -93,6 +99,13 @@ GNU General Public License for more details.
 	            	document.querySelector('[id$=":zoom"]').onchange();
             });
         }
+        
+        #{cc.attrs.id}.on('moveend', function(e) {
+	        	document.querySelector('[id$=":latitude"]').value = #{cc.attrs.id}.getCenter().lat;
+            	document.querySelector('[id$=":latitude"]').onchange();
+            	document.querySelector('[id$=":longitude"]').value = #{cc.attrs.id}.getCenter().lng;
+            	document.querySelector('[id$=":longitude"]').onchange();
+	    });
 
         if(#{cc.mapObject.miniMapEnabled}) {
             new L.Control.MiniMap(L.tileLayer('#{cc.mapObject.urlTemplate}', {}), {
