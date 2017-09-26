@@ -74,36 +74,32 @@ public class Map {
     /**
      * Set if the Map will have the layers checkbox control panel
      */
-    public Map setLayerControl(boolean layerControl) {
+    public void setLayerControl(boolean layerControl) {
         this.layerControl = layerControl;
-        return this;
     }
 
     public Position getLayerControlPosition() {
         return layerControlPosition;
     }
 
-    public Map setLayerControlPosition(final Position position) {
+    public void setLayerControlPosition(final Position position) {
         this.layerControlPosition = position;
-        return this;
     }
 
     public String getWidth() {
         return width;
     }
 
-    public Map setWidth(String width) {
+    public void setWidth(String width) {
         this.width = width;
-        return this;
     }
 
     public String getHeight() {
         return height;
     }
 
-    public Map setHeight(String height) {
+    public void setHeight(String height) {
         this.height = height;
-        return this;
     }
 
     public LatLong getCenter() {
@@ -113,9 +109,8 @@ public class Map {
     /**
      * Set the Map start position
      */
-    public Map setCenter(LatLong center) {
+    public void setCenter(LatLong center) {
         this.center = center;
-        return this;
     }
 
     public String getAttribution() {
@@ -125,9 +120,8 @@ public class Map {
     /**
      * Set the Map attribution/credits
      */
-    public Map setAttribution(String attribution) {
+    public void setAttribution(String attribution) {
         this.attribution = attribution;
-        return this;
     }
 
     public int getZoom() {
@@ -137,9 +131,8 @@ public class Map {
     /**
      * Set the initial Map zoom
      */
-    public Map setZoom(int zoom) {
+    public void setZoom(int zoom) {
         this.zoom = zoom;
-        return this;
     }
 
     public int getMinZoom() {
@@ -149,9 +142,8 @@ public class Map {
     /**
      * Set the minimum allowed zoom of the Map
      */
-    public Map setMinZoom(int minZoom) {
+    public void setMinZoom(int minZoom) {
         this.minZoom = minZoom;
-        return this;
     }
 
     public int getMaxZoom() {
@@ -161,9 +153,8 @@ public class Map {
     /**
      * Set the maximum allowed zoom of the Map
      */
-    public Map setMaxZoom(int maxZoom) {
+    public void setMaxZoom(int maxZoom) {
         this.maxZoom = maxZoom;
-        return this;
     }
 
     public boolean isZoomControl() {
@@ -173,9 +164,8 @@ public class Map {
     /**
      * Set if the Map will have the zoom buttons
      */
-    public Map setZoomControl(boolean zoomControl) {
+    public void setZoomControl(boolean zoomControl) {
         this.zoomControl = zoomControl;
-        return this;
     }
 
     public boolean isZoomEnabled() {
@@ -185,9 +175,8 @@ public class Map {
     /**
      * Set if zoom will be available on the Map
      */
-    public Map setZoomEnabled(boolean zoomEnabled) {
+    public void setZoomEnabled(boolean zoomEnabled) {
         this.zoomEnabled = zoomEnabled;
-        return this;
     }
 
     public boolean isDraggingEnabled() {
@@ -197,9 +186,8 @@ public class Map {
     /**
      * Set if the Map will be allowed do move
      */
-    public Map setDraggingEnabled(boolean draggingEnabled) {
+    public void setDraggingEnabled(boolean draggingEnabled) {
         this.draggingEnabled = draggingEnabled;
-        return this;
     }
 
     /**
@@ -218,9 +206,8 @@ public class Map {
      *
      * @param urlTemplate
      */
-    public Map setUrlTemplate(String urlTemplate) {
+    public void setUrlTemplate(String urlTemplate) {
         this.urlTemplate = urlTemplate;
-        return this;
     }
     
     public String getId() {
@@ -232,9 +219,8 @@ public class Map {
      *
      * @param id
      */
-    public Map setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
     
 	public Legend getLegend() {

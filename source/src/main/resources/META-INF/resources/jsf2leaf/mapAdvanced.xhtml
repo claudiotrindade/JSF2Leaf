@@ -64,7 +64,13 @@ GNU General Public License for more details.
     </style>
 
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
-
+	
+	<h:form style="display:none">
+    		<h:inputText id="zoom" value="#{cc.mapObject.zoom}"> 
+	    		<f:ajax />
+    		</h:inputText>
+	</h:form>       
+    
     <script type="text/javascript">
     
         var #{cc.attrs.id} = L.map('#{cc.attrs.id}', {center: [#{cc.mapObject.center.latitude},#{cc.mapObject.center.longitude}], dragging: #{cc.mapObject.draggingEnabled}, zoomControl: #{cc.mapObject.zoomControl} , zoom: #{cc.mapObject.zoom}});
@@ -81,6 +87,11 @@ GNU General Public License for more details.
             #{cc.attrs.id}.scrollWheelZoom.disable();
             #{cc.attrs.id}.boxZoom.disable();
             #{cc.attrs.id}.keyboard.disable();
+        } else {
+            #{cc.attrs.id}.on('zoomend', function(e) {
+	            	document.querySelector('[id$=":zoom"]').value = e.target._zoom;
+	            	document.querySelector('[id$=":zoom"]').onchange();
+            });
         }
 
         if(#{cc.mapObject.miniMapEnabled}) {

@@ -38,8 +38,12 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 	public TestBean()
 	{
 		//Configure Map
-		springfieldMap.setWidth("350px").setHeight("250px").setCenter(new LatLong("42.111707","-72.541008")).setZoom(13);
-		springfieldMap.setUrlTemplate("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw").setId("mapbox.streets");
+		springfieldMap.setWidth("350px");
+		springfieldMap.setHeight("250px");
+		springfieldMap.setCenter(new LatLong("42.111707","-72.541008"));
+		springfieldMap.setZoom(13);
+		springfieldMap.setUrlTemplate("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw");
+		springfieldMap.setId("mapbox.streets");
         springfieldMap.setAttribution("JSF2Leaf | Your business");
 
 		//Places Layer
