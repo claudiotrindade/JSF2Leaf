@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
 import com.jsf2leaf.model.Circle;
+import com.jsf2leaf.model.Feature;
 import com.jsf2leaf.model.LatLong;
 import com.jsf2leaf.model.Layer;
 import com.jsf2leaf.model.Map;
@@ -33,6 +34,11 @@ import com.jsf2leaf.options.Position;
 @ViewScoped 
 public class TestBean implements Serializable { // "implements Serializable" to fix WELD-000072
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Map springfieldMap = new Map();
 
 	public TestBean()
@@ -65,6 +71,14 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		polycircleLayer.addCircle((new Circle()).setPosition(new LatLong("42.111707","-72.541008")));
 		springfieldMap.addLayer(polycircleLayer);
 		springfieldMap.getDraw().setLayer(polycircleLayer);
+		
+		//Feature Layer
+		Layer featureLayer = (new Layer()).setLabel("Feature");
+		Feature feature = new Feature();
+		feature.setPopupMsg("MultiPoint");
+		feature.setGeometry("{\"type\":\"MultiPoint\",\"coordinates\":[[-72.541008,42.111707]]}");
+		featureLayer.addFeature(feature);
+		springfieldMap.addLayer(featureLayer);
 		
 		//Legend
 		Legend legend = new Legend();

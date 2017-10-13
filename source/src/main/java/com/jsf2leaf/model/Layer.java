@@ -27,6 +27,7 @@ public class Layer {
 	private List<Marker> markers = new ArrayList<Marker>();
 	private List<Polyline> polylines = new ArrayList<Polyline>();
 	private List<Circle> circles = new ArrayList<Circle>();
+	private List<Feature> features = new ArrayList<Feature>();
 
 	private String label;
 	private String id;
@@ -158,6 +159,20 @@ public class Layer {
 
 	public boolean isVisible() {
 		return this.isVisible;
+	}
+	
+	public List<Feature> getFeatures() {
+		return features;
+	}
+
+	public Layer addFeature(List<Feature> features) {
+		this.features.addAll(features);
+		return this;
+	}
+
+	public Layer addFeature(Feature feature) {
+		this.features.add(feature);
+		return this;
 	}
 
 	/**

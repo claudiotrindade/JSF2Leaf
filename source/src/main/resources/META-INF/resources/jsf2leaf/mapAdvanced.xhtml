@@ -123,7 +123,7 @@ GNU General Public License for more details.
 
             <ui:param name="layer_unique_name" value="#{layer.hasId() ? layer.id : 'layer'}" />
 
-            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.FeatureGroup();
+            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.GeoJSON();
         
             if(#{cc.mapObject.layerControl}) {
                 layers.addOverlay(#{layer_unique_name}, "#{layer.label}");
@@ -171,6 +171,15 @@ GNU General Public License for more details.
                 }
                 
                 circle.addTo(#{layer_unique_name});
+            </ui:repeat>
+            
+          	//Features
+            <ui:repeat value="#{layer.features}" var="feature">
+	            var geojsonFeature = {
+		    	    		"type": "Feature",
+		    	    	    "geometry": #{feature.geometry}
+		    	    	};
+		    	    #{layer_unique_name}.addData(geojsonFeature);
             </ui:repeat>
             
             if(#{layer.visible}) {
