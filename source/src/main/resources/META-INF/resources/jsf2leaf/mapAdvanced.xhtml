@@ -45,23 +45,7 @@ GNU General Public License for more details.
         <script src="#{resource['js:leaflet.draw-0.4.2.js']}"></script>
         
         <link rel="stylesheet" href="#{resource['css:legend.css']}" />
-
-        
     </h:head>
-
-    <style type="text/css">
-        .leaflet-control-layers-toggle {
-            background-image: url('#{resource['images:layers.png']}') !important;
-        }
-        .leaflet-draw-toolbar a{
-        		background-image:url('#{resource['images:spritesheet.png']}') !important;
-        		background-image:linear-gradient(transparent,transparent),url('#{resource['images:spritesheet.svg']}') !important
-        	}
-        .leaflet-retina .leaflet-draw-toolbar a{
-        		background-image:url('#{resource['images:spritesheet-2x.png']}') !important;
-        		background-image:linear-gradient(transparent,transparent),url('#{resource['images:spritesheet.svg']}') !important
-        	}
-    </style>
 
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
 	
@@ -147,7 +131,7 @@ GNU General Public License for more details.
             
             //Markers
             <ui:repeat value="#{layer.markers}" var="marker">
-                <ui:param name="path" value="/images/markers/#{marker.fileName}" />
+                <ui:param name="path" value="images:markers/#{marker.fileName}" />
 
                 if(!#{marker.pulse.pulsing}) {
                     var icon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource[path]}', shadowUrl: '#{resource['images:marker-shadow.png']}'});
