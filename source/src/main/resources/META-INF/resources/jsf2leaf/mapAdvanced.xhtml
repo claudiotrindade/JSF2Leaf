@@ -123,7 +123,7 @@ GNU General Public License for more details.
 
             <ui:param name="layer_unique_name" value="#{layer.hasId() ? layer.id : 'layer'}" />
 
-            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.GeoJSON();
+            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.GeoJSON([],{style: function(feature){return {"fill": feature.style.fill, "fillColor": feature.style.fillColor,"fillOpacity": feature.style.fillOpacity, "color": feature.style.color,"weight": feature.style.weight,"opacity": feature.style.opacity};}});
         
             if(#{cc.mapObject.layerControl}) {
                 layers.addOverlay(#{layer_unique_name}, "#{layer.label}");
@@ -177,7 +177,15 @@ GNU General Public License for more details.
             <ui:repeat value="#{layer.features}" var="feature">
 	            var geojsonFeature = {
 		    	    		"type": "Feature",
-		    	    	    "geometry": #{feature.geometry}
+		    	    	    "geometry": #{feature.geometry},
+		    	    	    "style": {
+		    	    	    		"color": "#{feature.style.color}",
+		    	    	    		"weight": "#{feature.style.weight}",
+		    	    	    		"opacity": "#{feature.style.opacity}",
+		    	    	    		"fill": "#{feature.style.fill}",
+		    	    	    		"fillColor": "#{feature.style.fillColor}",
+		    	    	    		"fillOpacity": "#{feature.style.fillOpacity}" 
+		    	    	    }
 		    	    	};
 		    	    #{layer_unique_name}.addData(geojsonFeature);
             </ui:repeat>

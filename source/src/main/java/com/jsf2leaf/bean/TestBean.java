@@ -75,6 +75,12 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		//Feature Layer
 		Layer featureLayer = (new Layer()).setLabel("Feature");
 		Feature feature = new Feature();
+		feature.getStyle().setColor("red");
+		feature.getStyle().setFillColor("red");
+		feature.setPopupMsg("Polygon");
+		feature.setGeometry("{\"type\":\"Polygon\",\"coordinates\":[[[-72.541008,42.111707],[-72.540000,42.120000],[-72.547488,42.120286]]]}");
+		featureLayer.addFeature(feature);
+		feature = new Feature();
 		feature.setPopupMsg("MultiPoint");
 		feature.setGeometry("{\"type\":\"MultiPoint\",\"coordinates\":[[-72.541008,42.111707]]}");
 		featureLayer.addFeature(feature);

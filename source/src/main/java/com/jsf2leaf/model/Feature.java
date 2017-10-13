@@ -4,7 +4,7 @@ public class Feature {
 	
 	private String geometry;
 	private String popupMsg;
-	private Style style;
+	private Style style = new Style();
 	
 	public String getGeometry() {
 		return geometry;
