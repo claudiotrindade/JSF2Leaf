@@ -6,7 +6,7 @@ public class Style {
 	private String color = "#3388ff";
 	private double opacity = 1.0;
 	private boolean fill = true;
-	private String fillColor = "#3388ff";
+	private String fillColor = "";
 	private double fillOpacity = 0.2;
 	
 	/**

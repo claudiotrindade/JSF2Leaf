@@ -17,7 +17,7 @@ package com.jsf2leaf.model;
 public class Circle {
 	
 	private LatLong position;
-	private int radius = 200;
+	private double radius = 200;
 	private String popupMsg;
 	private Style style = new Style();
 	
@@ -90,7 +90,7 @@ public class Circle {
 		return this;
 	}
 	
-	public int getRadius() {
+	public double getRadius() {
 		return radius;
 	}
 	
@@ -98,7 +98,7 @@ public class Circle {
 	 * Set the Circle radius
 	 * @param radius Meters unit
 	 */
-	public Circle setRadius(int radius) {
+	public Circle setRadius(double radius) {
 		this.radius = radius;
 		return this;
 	}

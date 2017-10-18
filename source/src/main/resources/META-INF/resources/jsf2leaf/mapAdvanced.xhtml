@@ -54,10 +54,19 @@ GNU General Public License for more details.
 	    		<f:ajax />
     		</h:inputText>
     		<h:inputText id="latitude" value="#{cc.mapObject.center.latitude}" style="display:none"> 
-	    		<f:ajax render="outputlatitude" />
+	    		<f:ajax />
     		</h:inputText>
     		<h:inputText id="longitude" value="#{cc.mapObject.center.longitude}" style="display:none"> 
-	    		<f:ajax render="outputlongitude" />
+	    		<f:ajax />
+    		</h:inputText>
+    		<h:inputText id="drawCreate" value="#{cc.mapObject.draw.geoJsonObject}" style="display:none"> 
+	    		<f:ajax listener="#{cc.mapObject.draw.create}" onevent="drawCreateCallback" render="drawCreate"/>
+    		</h:inputText>
+    		<h:inputText id="drawEdit" value="#{cc.mapObject.draw.geoJsonObject}" style="display:none"> 
+	    		<f:ajax listener="#{cc.mapObject.draw.edit}" onevent="drawEditCallback" render="drawEdit"/>
+    		</h:inputText>
+    		<h:inputText id="drawDelete" value="#{cc.mapObject.draw.geoJsonObject}" style="display:none"> 
+	    		<f:ajax listener="#{cc.mapObject.draw.delete}" onevent="drawDeleteCallback" render="drawDelete"/>
     		</h:inputText>
 	</h:form>       
     
@@ -118,19 +127,21 @@ GNU General Public License for more details.
 			legend.addTo(#{cc.attrs.id});
 		}
         
+        var editableLayerObjects = {};
+        
         //Layers
         <ui:repeat value="#{cc.mapObject.layers}" var="layer">
 
             <ui:param name="layer_unique_name" value="#{layer.hasId() ? layer.id : 'layer'}" />
-
-            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.GeoJSON([],{style: function(feature){return {"fill": feature.style.fill, "fillColor": feature.style.fillColor,"fillOpacity": feature.style.fillOpacity, "color": feature.style.color,"weight": feature.style.weight,"opacity": feature.style.opacity};}});
+            
+            var #{layer_unique_name} = #{layer.clusterEnabled}?new L.MarkerClusterGroup({ disableClusteringAtZoom: #{layer.clusterDisableAtZoom}, maxClusterRadius: #{layer.clusterMaxRadius}}):new L.FeatureGroup();
         
             if(#{cc.mapObject.layerControl}) {
                 layers.addOverlay(#{layer_unique_name}, "#{layer.label}");
             }
             
             //Markers
-            <ui:repeat value="#{layer.markers}" var="marker">
+            <ui:repeat value="#{layer.markers}" var="marker" varStatus="status">
                 <ui:param name="path" value="images:markers/#{marker.fileName}" />
 
                 if(!#{marker.pulse.pulsing}) {
@@ -145,10 +156,14 @@ GNU General Public License for more details.
                 }
                 
                 marker.addTo(#{layer_unique_name});
+                
+                if (#{layer.equals(cc.mapObject.draw.layer)}) {
+                		editableLayerObjects[marker._leaflet_id] = {index: #{status.index}, type: "marker",  id: marker._leaflet_id};
+                }
             </ui:repeat>
             
             //Polylines
-            <ui:repeat value="#{layer.polylines}" var="polyline">
+            <ui:repeat value="#{layer.polylines}" var="polyline" varStatus="status">
                 var poly = L.polyline([],{color: '#{polyline.style.color}', weight: #{polyline.style.weight}, fill: #{polyline.style.fill}, fillColor: '#{polyline.style.fillColor}', fillOpacity: #{polyline.style.fillOpacity}});
         
                 <ui:repeat value="#{polyline.points}" var="point">
@@ -160,10 +175,14 @@ GNU General Public License for more details.
                 }
         
                 poly.addTo(#{layer_unique_name});
+                
+                if (#{layer.equals(cc.mapObject.draw.layer)}) {
+                		editableLayerObjects[poly._leaflet_id] = {index: #{status.index}, type: "polyline", id: poly._leaflet_id};
+	            }
             </ui:repeat>
             
             //Circles
-            <ui:repeat value="#{layer.circles}" var="circle">
+            <ui:repeat value="#{layer.circles}" var="circle" varStatus="status">
                 var circle = L.circle([#{circle.position.latitude},#{circle.position.longitude}], #{circle.radius},{color: '#{circle.style.color}', weight: #{circle.style.weight}, fill: #{circle.style.fill}, fillColor: '#{circle.style.fillColor}', fillOpacity: #{circle.style.fillOpacity}});
                 
                 if(#{!circle.popupMsg.isEmpty()}) {
@@ -171,23 +190,39 @@ GNU General Public License for more details.
                 }
                 
                 circle.addTo(#{layer_unique_name});
+                
+                if (#{layer.equals(cc.mapObject.draw.layer)}) {
+                		editableLayerObjects[circle._leaflet_id] = {index: #{status.index}, type: "circle", id: circle._leaflet_id};
+	            }
             </ui:repeat>
             
           	//Features
-            <ui:repeat value="#{layer.features}" var="feature">
-	            var geojsonFeature = {
-		    	    		"type": "Feature",
-		    	    	    "geometry": #{feature.geometry},
-		    	    	    "style": {
-		    	    	    		"color": "#{feature.style.color}",
-		    	    	    		"weight": "#{feature.style.weight}",
-		    	    	    		"opacity": "#{feature.style.opacity}",
-		    	    	    		"fill": "#{feature.style.fill}",
-		    	    	    		"fillColor": "#{feature.style.fillColor}",
-		    	    	    		"fillOpacity": "#{feature.style.fillOpacity}" 
-		    	    	    }
-		    	    	};
-		    	    #{layer_unique_name}.addData(geojsonFeature);
+            <ui:repeat value="#{layer.features}" var="feature" varStatus="status">
+	            var geoJsonLayer = L.geoJson({
+		    	    		type: "Feature",
+		    	    	    geometry: #{feature.geometry}
+		    	    	},{
+		    	    		style: {
+		    	    	    		color: "#{feature.style.color}",
+		    	    	    		weight: "#{feature.style.weight}",
+		    	    	    		opacity: "#{feature.style.opacity}",
+		    	    	    		fill: "#{feature.style.fill}",
+		    	    	    		fillColor: "#{feature.style.fillColor}",
+		    	    	    		fillOpacity: "#{feature.style.fillOpacity}" 
+		    	    		},
+	            		onEachFeature: function(feature, layer) {
+	            			layer.bindPopup("#{feature.popupMsg}");
+	            		},
+	            		pointToLayer: function(feature, latlng) {
+	            			return L.marker(latlng);
+	            		}
+		    	    	});
+	            geoJsonLayer.eachLayer(function(feature){
+	            		feature.addTo(#{layer_unique_name});
+	            		if (#{layer.equals(cc.mapObject.draw.layer)}) {
+			    	    		editableLayerObjects[feature._leaflet_id] = {index: #{status.index}, type: "feature", id: feature._leaflet_id};
+	                }
+				});
             </ui:repeat>
             
             if(#{layer.visible}) {
@@ -199,31 +234,65 @@ GNU General Public License for more details.
         
         if(#{cc.mapObject.draw != null}) {
         		if (#{cc.mapObject.draw.layer != null}) {
-		        var DrawCustomMarker = L.Icon.extend({
-		            options: {
-		                shadowUrl: null,
-		                iconUrl: '#{resource['images:marker-icon.png']}'
-		            }
-		        });
+		        var drawStyleOptions = {
+					color: '#{cc.mapObject.draw.style.color}',
+					weight: '#{cc.mapObject.draw.style.weight}',
+					opacity: '#{cc.mapObject.draw.style.opacity}',
+					fill: '#{cc.mapObject.draw.style.fill}',
+					fillColor: '#{cc.mapObject.draw.style.fillColor}',
+					fillOpacity: '#{cc.mapObject.draw.style.fillOpacity}'
+				};
 		
 		        var drawControl = new L.Control.Draw({
 		            position: '#{cc.mapObject.draw.position.value}',
 		            draw: {
-		                marker: {
-		                    icon: new DrawCustomMarker()
-		                }
+						polyline: #{cc.mapObject.draw.polylineEnabled ? "{shapeOptions: drawStyleOptions}" : false },
+						polygon: #{cc.mapObject.draw.polygonEnabled ? "{shapeOptions: drawStyleOptions}" : false },
+						rectangle: #{cc.mapObject.draw.rectangleEnabled ? "{shapeOptions: drawStyleOptions}" : false },
+						circle: #{cc.mapObject.draw.circleEnabled ? "{shapeOptions: drawStyleOptions}" : false },
+						marker: #{cc.mapObject.draw.markerEnabled ? "{}" : false },
 		            },
 		            edit: {
-		                featureGroup: #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}]
+		                featureGroup: #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}],
+		                edit: #{cc.mapObject.draw.editEnabled ? "{}" : false },
+		                remove: #{cc.mapObject.draw.removeEnabled ? "{}" : false },
 		            }
 		        });
 		        
 		        #{cc.attrs.id}.addControl(drawControl);
+		        
+		        var layerToGeoJson = function(layer) {
+		        		var geoJson = layer.toGeoJSON();
+		        		var properties = editableLayerObjects[layer._leaflet_id];
+		        		
+		        		if (properties.type == 'circle') {
+		        			geoJson.geometry["radius"] = layer._mRadius;
+		        		}
+		        		
+		        		geoJson.properties = properties;
+		        		
+		        		return JSON.stringify(geoJson);
+		        }
 		
-		        #{cc.attrs.id}.on(L.Draw.Event.CREATED, function (e) {
-		            var type = e.layerType,
-		                layer = e.layer;
-		            #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}].addLayer(layer);
+		        #{cc.attrs.id}.on("draw:created", function (e) {
+		            #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}].addLayer(e.layer);
+		            editableLayerObjects[e.layer._leaflet_id] = {index: -1, type: e.layerType, id: e.layer._leaflet_id};
+		            
+		            document.querySelector('[id$=":drawCreate"]').value = layerToGeoJson(e.layer);
+	            		document.querySelector('[id$=":drawCreate"]').onchange();
+		        });
+		        #{cc.attrs.id}.on("draw:edited", function (e) {
+		            e.layers.eachLayer(function(layer) {
+		            		document.querySelector('[id$=":drawEdit"]').value = layerToGeoJson(layer);
+	            			document.querySelector('[id$=":drawEdit"]').onchange();
+		            });
+		            
+		        });
+		        #{cc.attrs.id}.on("draw:deleted", function (e) {
+		            e.layers.eachLayer(function(layer) {
+		            		document.querySelector('[id$=":drawDelete"]').value = layerToGeoJson(layer);
+	            			document.querySelector('[id$=":drawDelete"]').onchange();
+		            });
 		        });
         		}
         }
@@ -231,6 +300,26 @@ GNU General Public License for more details.
         if(#{cc.mapObject.layerControl}) {
             layers.addTo(#{cc.attrs.id});
         }
+        
+        var drawCreateCallback = function(response) {
+	    		if (response.status == "success") { 
+	    			var feature = JSON.parse(document.querySelector('[id$="drawCreate"]').value);
+	    			editableLayerObjects[feature.properties.id].index = feature.properties.index;
+	    		}
+	    	}
+        
+        var drawEditCallback = function(response) {
+	    		if (response.status == "success") {
+	    			var feature = JSON.parse(document.querySelector('[id$="drawEdit"]').value);
+	    		}
+	    	}
+        
+        var drawDeleteCallback = function(response) {
+	    		if (response.status == "success") {
+	    			var feature = JSON.parse(document.querySelector('[id$="drawDelete"]').value);
+	    			delete editableLayerObjects[feature.properties.id];
+	    		}
+	    	}
     </script>
     
 </composite:implementation>

@@ -17,7 +17,7 @@ package com.jsf2leaf.bean;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.jsf2leaf.model.Circle;
 import com.jsf2leaf.model.Feature;
@@ -44,8 +44,8 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 	public TestBean()
 	{
 		//Configure Map
-		springfieldMap.setWidth("350px");
-		springfieldMap.setHeight("250px");
+		springfieldMap.setWidth("550px");
+		springfieldMap.setHeight("450px");
 		springfieldMap.setCenter(new LatLong("42.111707","-72.541008"));
 		springfieldMap.setZoom(13);
 		springfieldMap.setUrlTemplate("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw");
@@ -70,7 +70,6 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		polycircleLayer.addPolyline((new Polyline()).addPoint(new LatLong("42.114556","-72.526309")).addPoint(new LatLong("42.120000","-72.540000")).addPoint(new LatLong("42.120286","-72.547488")));
 		polycircleLayer.addCircle((new Circle()).setPosition(new LatLong("42.111707","-72.541008")));
 		springfieldMap.addLayer(polycircleLayer);
-		springfieldMap.getDraw().setLayer(polycircleLayer);
 		
 		//Feature Layer
 		Layer featureLayer = (new Layer()).setLabel("Feature");
@@ -81,8 +80,8 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		feature.setGeometry("{\"type\":\"Polygon\",\"coordinates\":[[[-72.541008,42.111707],[-72.540000,42.120000],[-72.547488,42.120286]]]}");
 		featureLayer.addFeature(feature);
 		feature = new Feature();
-		feature.setPopupMsg("MultiPoint");
-		feature.setGeometry("{\"type\":\"MultiPoint\",\"coordinates\":[[-72.541008,42.111707]]}");
+		feature.setPopupMsg("Point");
+		feature.setGeometry("{\"type\":\"Point\",\"coordinates\":[-72.541008,42.111707]}");
 		featureLayer.addFeature(feature);
 		springfieldMap.addLayer(featureLayer);
 		
@@ -98,6 +97,9 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		legend.addGrade(500, "500-1000", "#BD0026");
 		legend.addGrade(1000, "1000+", "#800026");
 		springfieldMap.setLegend(legend);
+		
+		//Draw
+		springfieldMap.getDraw().setLayer(featureLayer);
 	}
 
 	public Map getSpringfieldMap() {

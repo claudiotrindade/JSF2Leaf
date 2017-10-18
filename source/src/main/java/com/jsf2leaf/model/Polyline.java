@@ -70,6 +70,11 @@ public class Polyline {
 	public List<LatLong> getPoints() {
 		return points;
 	}
+	
+	public Polyline setPoints(List<LatLong> points) {
+		this.points = points;
+		return this;
+	}
 
 	public Polyline addPoint(List<LatLong> points) {
 		this.points.addAll(points);
