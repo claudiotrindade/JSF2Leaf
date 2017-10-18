@@ -46,6 +46,20 @@ GNU General Public License for more details.
         
         <link rel="stylesheet" href="#{resource['css:legend.css']}" />
     </h:head>
+    
+    <style type="text/css">
+        .leaflet-control-layers-toggle {
+            background-image: url('#{resource['images:layers.png']}') !important;
+        }
+        .leaflet-draw-toolbar a{
+        		background-image:url('#{resource['images:spritesheet.png']}') !important;
+        		background-image:linear-gradient(transparent,transparent),url('#{resource['images:spritesheet.svg']}') !important
+        	}
+        .leaflet-retina .leaflet-draw-toolbar a{
+        		background-image:url('#{resource['images:spritesheet-2x.png']}') !important;
+        		background-image:linear-gradient(transparent,transparent),url('#{resource['images:spritesheet.svg']}') !important
+        	}
+    </style>
 
     <div id="#{cc.attrs.id}" style="width:#{cc.mapObject.width}; height:#{cc.mapObject.height}"/>
 	
@@ -214,7 +228,8 @@ GNU General Public License for more details.
 	            			layer.bindPopup("#{feature.popupMsg}");
 	            		},
 	            		pointToLayer: function(feature, latlng) {
-	            			return L.marker(latlng);
+	            			var icon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource['images:marker-icon.png']}', shadowUrl: '#{resource['images:marker-shadow.png']}'});
+	            			return L.marker(latlng, {icon: icon});
 	            		}
 		    	    	});
 	            geoJsonLayer.eachLayer(function(feature){
@@ -242,6 +257,8 @@ GNU General Public License for more details.
 					fillColor: '#{cc.mapObject.draw.style.fillColor}',
 					fillOpacity: '#{cc.mapObject.draw.style.fillOpacity}'
 				};
+		        
+		        var drawMarkerIcon = new L.Icon({iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [0, -45], iconUrl: '#{resource['images:marker-icon.png']}', shadowUrl: '#{resource['images:marker-shadow.png']}'});
 		
 		        var drawControl = new L.Control.Draw({
 		            position: '#{cc.mapObject.draw.position.value}',
@@ -250,7 +267,7 @@ GNU General Public License for more details.
 						polygon: #{cc.mapObject.draw.polygonEnabled ? "{shapeOptions: drawStyleOptions}" : false },
 						rectangle: #{cc.mapObject.draw.rectangleEnabled ? "{shapeOptions: drawStyleOptions}" : false },
 						circle: #{cc.mapObject.draw.circleEnabled ? "{shapeOptions: drawStyleOptions}" : false },
-						marker: #{cc.mapObject.draw.markerEnabled ? "{}" : false },
+						marker: #{cc.mapObject.draw.markerEnabled ? "{icon: drawMarkerIcon}" : false },
 		            },
 		            edit: {
 		                featureGroup: #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}],
