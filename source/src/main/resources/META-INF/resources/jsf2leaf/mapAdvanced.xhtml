@@ -172,7 +172,7 @@ GNU General Public License for more details.
                 marker.addTo(#{layer_unique_name});
                 
                 if (#{layer.equals(cc.mapObject.draw.layer)}) {
-                		editableLayerObjects[marker._leaflet_id] = {index: #{status.index}, type: "marker",  id: marker._leaflet_id};
+                		editableLayerObjects[marker._leaflet_id] = {indexOfArray: #{status.index}, layerType: "marker",  leafletId: marker._leaflet_id};
                 }
             </ui:repeat>
             
@@ -191,7 +191,7 @@ GNU General Public License for more details.
                 poly.addTo(#{layer_unique_name});
                 
                 if (#{layer.equals(cc.mapObject.draw.layer)}) {
-                		editableLayerObjects[poly._leaflet_id] = {index: #{status.index}, type: "polyline", id: poly._leaflet_id};
+                		editableLayerObjects[poly._leaflet_id] = {indexOfArray: #{status.index}, layerType: "polyline", leafletId: poly._leaflet_id};
 	            }
             </ui:repeat>
             
@@ -206,16 +206,14 @@ GNU General Public License for more details.
                 circle.addTo(#{layer_unique_name});
                 
                 if (#{layer.equals(cc.mapObject.draw.layer)}) {
-                		editableLayerObjects[circle._leaflet_id] = {index: #{status.index}, type: "circle", id: circle._leaflet_id};
+                		editableLayerObjects[circle._leaflet_id] = {indexOfArray: #{status.index}, layerType: "circle", leafletId: circle._leaflet_id};
 	            }
             </ui:repeat>
             
           	//Features
             <ui:repeat value="#{layer.features}" var="feature" varStatus="status">
-	            var geoJsonLayer = L.geoJson({
-		    	    		type: "Feature",
-		    	    	    geometry: #{feature.geometry}
-		    	    	},{
+	            var geoJson = #{feature.toGeoJSON()};
+            		var geoJsonLayer = L.geoJson(geoJson,{
 		    	    		style: {
 		    	    	    		color: "#{feature.style.color}",
 		    	    	    		weight: "#{feature.style.weight}",
@@ -235,7 +233,7 @@ GNU General Public License for more details.
 	            geoJsonLayer.eachLayer(function(feature){
 	            		feature.addTo(#{layer_unique_name});
 	            		if (#{layer.equals(cc.mapObject.draw.layer)}) {
-			    	    		editableLayerObjects[feature._leaflet_id] = {index: #{status.index}, type: "feature", id: feature._leaflet_id};
+			    	    		editableLayerObjects[feature._leaflet_id] = {indexOfArray: #{status.index}, layerType: "feature", leafletId: feature._leaflet_id};
 	                }
 				});
             </ui:repeat>
@@ -282,18 +280,18 @@ GNU General Public License for more details.
 		        		var geoJson = layer.toGeoJSON();
 		        		var properties = editableLayerObjects[layer._leaflet_id];
 		        		
-		        		if (properties.type == 'circle') {
+		        		if (properties.layerType == 'circle') {
 		        			geoJson.geometry["radius"] = layer._mRadius;
 		        		}
 		        		
-		        		geoJson.properties = properties;
+		        		geoJson.properties = Object.assign({}, geoJson.properties, properties);
 		        		
 		        		return JSON.stringify(geoJson);
 		        }
 		
 		        #{cc.attrs.id}.on("draw:created", function (e) {
 		            #{cc.attrs.id}_layers[#{cc.mapObject.layers.indexOf(cc.mapObject.draw.layer)}].addLayer(e.layer);
-		            editableLayerObjects[e.layer._leaflet_id] = {index: -1, type: e.layerType, id: e.layer._leaflet_id};
+		            editableLayerObjects[e.layer._leaflet_id] = {indexOfArray: -1, layerType: e.layerType, leafletId: e.layer._leaflet_id};
 		            
 		            document.querySelector('[id$=":drawCreate"]').value = layerToGeoJson(e.layer);
 	            		document.querySelector('[id$=":drawCreate"]').onchange();
@@ -321,7 +319,7 @@ GNU General Public License for more details.
         var drawCreateCallback = function(response) {
 	    		if (response.status == "success") { 
 	    			var feature = JSON.parse(document.querySelector('[id$="drawCreate"]').value);
-	    			editableLayerObjects[feature.properties.id].index = feature.properties.index;
+	    			editableLayerObjects[feature.properties.leafletId].indexOfArray = feature.properties.indexOfArray;
 	    		}
 	    	}
         
@@ -334,7 +332,7 @@ GNU General Public License for more details.
         var drawDeleteCallback = function(response) {
 	    		if (response.status == "success") {
 	    			var feature = JSON.parse(document.querySelector('[id$="drawDelete"]').value);
-	    			delete editableLayerObjects[feature.properties.id];
+	    			delete editableLayerObjects[feature.properties.leafletId];
 	    		}
 	    	}
     </script>

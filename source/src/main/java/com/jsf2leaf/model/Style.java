@@ -99,4 +99,16 @@ public class Style {
 		return this;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Style [weight=" + weight
+				+ ", color=" + color
+				+ ", opacity=" + opacity 
+				+ ", fill=" + fill
+				+ ", fillColor=" + fillColor
+				+ ", fillOpacity=" + fillOpacity
+				+ "]";
+	}
+	
 }

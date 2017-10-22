@@ -184,7 +184,8 @@ public class Layer {
 	@Override
 	public String toString() {
 		return "Layer [markers=" + markers.toString() + ", polylines=" + polylines.toString()
-				+ ", circles=" + circles.toString() + ", label=" + label + ", checked="
+				+ ", circles=" + circles.toString() + ", features=" + features.toString() 
+				+ ", label=" + label + ", checked="
 				+ checked + ", cluster=" + clusterEnabled + ", clusterDisableAtZoom="
 				+ clusterDisableAtZoom + ", clusterMaxRadius="
 				+ clusterMaxRadius + "]";

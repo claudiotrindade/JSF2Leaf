@@ -15,6 +15,8 @@ GNU General Public License for more details.*/
 package com.jsf2leaf.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,6 +28,7 @@ import com.jsf2leaf.model.Layer;
 import com.jsf2leaf.model.Map;
 import com.jsf2leaf.model.Marker;
 import com.jsf2leaf.model.Polyline;
+import com.jsf2leaf.model.Property;
 import com.jsf2leaf.model.Pulse;
 import com.jsf2leaf.model.legend.Legend;
 import com.jsf2leaf.options.Position;
@@ -78,6 +81,10 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		feature.getStyle().setFillColor("red");
 		feature.setPopupMsg("Polygon");
 		feature.setGeometry("{\"type\":\"Polygon\",\"coordinates\":[[[-72.541008,42.111707],[-72.540000,42.120000],[-72.547488,42.120286]]]}");
+		List<Property> properties = new ArrayList<Property>();
+		properties.add(new Property("property1","1"));
+		properties.add(new Property("property2","2"));
+		feature.setProperties(properties);
 		featureLayer.addFeature(feature);
 		feature = new Feature();
 		feature.setPopupMsg("Point");
