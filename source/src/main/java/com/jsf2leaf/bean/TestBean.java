@@ -88,7 +88,7 @@ public class TestBean implements Serializable { // "implements Serializable" to 
 		featureLayer.addFeature(feature);
 		feature = new Feature();
 		feature.setPopupMsg("Point");
-		feature.setGeometry("{\"type\":\"Point\",\"coordinates\":[-72.541008,42.111707]}");
+		feature.setGeometry("{\"type\":\"MultiPoint\",\"coordinates\":[[-72.541008,42.111707]]}");
 		featureLayer.addFeature(feature);
 		springfieldMap.addLayer(featureLayer);
 		

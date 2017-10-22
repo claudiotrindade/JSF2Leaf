@@ -213,6 +213,11 @@ GNU General Public License for more details.
           	//Features
             <ui:repeat value="#{layer.features}" var="feature" varStatus="status">
 	            var geoJson = #{feature.toGeoJSON()};
+	            // Leaflet Draw not support geometies with Multi type
+	            if (geoJson.geometry.type.indexOf("Multi") !== -1) {
+	            		geoJson.geometry.type = geoJson.geometry.type.replace("Multi", "");
+	            		geoJson.geometry.coordinates = geoJson.geometry.coordinates[0]; 
+	            }
             		var geoJsonLayer = L.geoJson(geoJson,{
 		    	    		style: {
 		    	    	    		color: "#{feature.style.color}",
